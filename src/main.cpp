@@ -1,21 +1,37 @@
 #include <SFML/Graphics.hpp>
+using namespace std;
+using namespace sf;
+
+string runMainMenu(RenderWindow& window);
 
 int main()
 {
-	sf::RenderWindow window( sf::VideoMode( { 200, 200 } ), "SFML works!" );
-	sf::CircleShape shape( 100.f );
-	shape.setFillColor( sf::Color::Green );
+    RenderWindow window(VideoMode({ 1648, 928 }), "Vault Heist");
 
-	while ( window.isOpen() )
-	{
-		while ( const std::optional event = window.pollEvent() )
-		{
-			if ( event->is<sf::Event::Closed>() )
-				window.close();
-		}
+    string choice = runMainMenu(window);
 
-		window.clear();
-		window.draw( shape );
-		window.display();
-	}
+    if (choice == "CAMPAIGN MAP")
+    {
+        // CampaignMap.cpp
+    }
+    else if (choice == "ENDLESS")
+    {
+        // EndlessMode.cpp
+    }
+    else if (choice == "SANDBOX")
+    {
+        // Sandbox.cpp
+    }
+    else if (choice == "LEADERBOARD")
+    {
+        // Call Leaderboard.cpp
+    }
+    else if (choice == "SETTINGS")
+    {
+        // Settings.cpp
+    }
+    else if (choice == "EXIT GAME")
+    {
+        window.close();
+    }
 }
