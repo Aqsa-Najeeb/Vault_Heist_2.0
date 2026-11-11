@@ -6,7 +6,7 @@ string runMainMenu(RenderWindow& window);
 
 int main()
 {
-    RenderWindow window(VideoMode({ 1648, 928 }), "Vault Heist");
+    RenderWindow window(VideoMode({ 1920, 1080 }), "Vault Heist", State::Fullscreen);
 
     string choice = runMainMenu(window);
 
