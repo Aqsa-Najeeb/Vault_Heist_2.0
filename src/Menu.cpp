@@ -122,7 +122,7 @@ string runMainMenu(RenderWindow& window)
             outline.setSize({ buttonW[i] * scaleX, buttonH[i] * scaleY });
             outline.setFillColor(sf::Color::Transparent);
             outline.setOutlineThickness(3.f);
-            outline.setOutlineColor(Color(255, 218, 145, 230));
+            outline.setOutlineColor(Color(40, 89, 110, 255));
 
             window.draw(outline);
         }

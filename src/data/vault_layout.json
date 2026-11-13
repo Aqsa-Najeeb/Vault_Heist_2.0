@@ -1,0 +1,1697 @@
+{
+ "notes": "All coordinates are in 1920x1080 design space, measured from the supplied PNGs. Rename 5.png to level_1_1.png. Act 4 levels: tree_area on top, array_strip (10 cells) below.",
+ "shared": {
+  "design_size": [
+   1920,
+   1080
+  ],
+  "back_arrow": {
+   "x": 50,
+   "y": 28,
+   "w": 58,
+   "h": 44
+  },
+  "canvas": {
+   "x": 398,
+   "y": 265,
+   "w": 1100,
+   "h": 648
+  },
+  "event_log": {
+   "x": 1523,
+   "y": 257,
+   "w": 343,
+   "h": 648
+  },
+  "hud": {
+   "alarm_slot": {
+    "x": 1085,
+    "y": 140,
+    "w": 30,
+    "h": 60
+   },
+   "score_slot": {
+    "x": 1360,
+    "y": 150,
+    "w": 300,
+    "h": 60
+   }
+  },
+  "toolbar": {
+   "undo": {
+    "x": 200,
+    "y": 955,
+    "w": 140,
+    "h": 70
+   },
+   "reset": {
+    "x": 518,
+    "y": 955,
+    "w": 127,
+    "h": 70
+   },
+   "replay": {
+    "x": 808,
+    "y": 955,
+    "w": 154,
+    "h": 70
+   },
+   "hint": {
+    "x": 1112,
+    "y": 955,
+    "w": 106,
+    "h": 70
+   },
+   "speed_slider": {
+    "x": 1540,
+    "y": 975,
+    "w": 218,
+    "h": 30
+   }
+  }
+ },
+ "screens": {
+  "main_menu": {
+   "image": "main_menu.png",
+   "buttons": [
+    {
+     "id": "campaign_map",
+     "x": 1446,
+     "y": 140,
+     "w": 423,
+     "h": 95
+    },
+    {
+     "id": "endless",
+     "x": 1450,
+     "y": 280,
+     "w": 248,
+     "h": 95
+    },
+    {
+     "id": "sandbox",
+     "x": 1450,
+     "y": 435,
+     "w": 261,
+     "h": 96
+    },
+    {
+     "id": "leaderboard",
+     "x": 1450,
+     "y": 591,
+     "w": 391,
+     "h": 95
+    },
+    {
+     "id": "settings",
+     "x": 1450,
+     "y": 747,
+     "w": 257,
+     "h": 95
+    },
+    {
+     "id": "exit_game",
+     "x": 1450,
+     "y": 902,
+     "w": 300,
+     "h": 95
+    }
+   ]
+  },
+  "campaign_map": {
+   "image": "campaign_map.png",
+   "buttons": [
+    {
+     "id": "1.1",
+     "act": 1,
+     "x": 409,
+     "y": 383,
+     "w": 185,
+     "h": 74
+    },
+    {
+     "id": "1.2",
+     "act": 1,
+     "x": 409,
+     "y": 467,
+     "w": 185,
+     "h": 74
+    },
+    {
+     "id": "1.3",
+     "act": 1,
+     "x": 409,
+     "y": 552,
+     "w": 185,
+     "h": 74
+    },
+    {
+     "id": "1.4",
+     "act": 1,
+     "x": 409,
+     "y": 637,
+     "w": 185,
+     "h": 74
+    },
+    {
+     "id": "1.5",
+     "act": 1,
+     "x": 409,
+     "y": 722,
+     "w": 185,
+     "h": 74
+    },
+    {
+     "id": "2.1",
+     "act": 2,
+     "x": 715,
+     "y": 380,
+     "w": 184,
+     "h": 74
+    },
+    {
+     "id": "2.2",
+     "act": 2,
+     "x": 715,
+     "y": 464,
+     "w": 184,
+     "h": 74
+    },
+    {
+     "id": "2.3",
+     "act": 2,
+     "x": 715,
+     "y": 549,
+     "w": 184,
+     "h": 74
+    },
+    {
+     "id": "2.4",
+     "act": 2,
+     "x": 715,
+     "y": 634,
+     "w": 184,
+     "h": 74
+    },
+    {
+     "id": "2.5",
+     "act": 2,
+     "x": 715,
+     "y": 718,
+     "w": 184,
+     "h": 74
+    },
+    {
+     "id": "3.1",
+     "act": 3,
+     "x": 1021,
+     "y": 383,
+     "w": 184,
+     "h": 74
+    },
+    {
+     "id": "3.2",
+     "act": 3,
+     "x": 1021,
+     "y": 467,
+     "w": 184,
+     "h": 74
+    },
+    {
+     "id": "3.3",
+     "act": 3,
+     "x": 1021,
+     "y": 552,
+     "w": 184,
+     "h": 74
+    },
+    {
+     "id": "3.4",
+     "act": 3,
+     "x": 1021,
+     "y": 637,
+     "w": 184,
+     "h": 74
+    },
+    {
+     "id": "3.5",
+     "act": 3,
+     "x": 1021,
+     "y": 722,
+     "w": 184,
+     "h": 74
+    },
+    {
+     "id": "endless",
+     "act": 3,
+     "x": 1021,
+     "y": 811,
+     "w": 184,
+     "h": 74
+    },
+    {
+     "id": "4.1",
+     "act": 4,
+     "x": 1326,
+     "y": 383,
+     "w": 185,
+     "h": 74
+    },
+    {
+     "id": "4.2",
+     "act": 4,
+     "x": 1326,
+     "y": 467,
+     "w": 185,
+     "h": 74
+    },
+    {
+     "id": "4.3",
+     "act": 4,
+     "x": 1326,
+     "y": 552,
+     "w": 185,
+     "h": 74
+    },
+    {
+     "id": "4.4",
+     "act": 4,
+     "x": 1326,
+     "y": 637,
+     "w": 185,
+     "h": 74
+    },
+    {
+     "id": "4.5",
+     "act": 4,
+     "x": 1326,
+     "y": 722,
+     "w": 185,
+     "h": 74
+    }
+   ]
+  },
+  "result_pass": {
+   "image": "result_pass.png",
+   "back_arrow": {
+    "x": 60,
+    "y": 72,
+    "w": 95,
+    "h": 80
+   },
+   "stars": [
+    {
+     "x": 795,
+     "y": 437,
+     "w": 90,
+     "h": 87
+    },
+    {
+     "x": 915,
+     "y": 437,
+     "w": 90,
+     "h": 87
+    },
+    {
+     "x": 1035,
+     "y": 437,
+     "w": 90,
+     "h": 87
+    }
+   ],
+   "steps_value": {
+    "x": 1000,
+    "y": 612,
+    "w": 262,
+    "h": 60
+   },
+   "penalties_value": {
+    "x": 1000,
+    "y": 708,
+    "w": 262,
+    "h": 60
+   },
+   "button": {
+    "id": "next_level",
+    "x": 518,
+    "y": 862,
+    "w": 884,
+    "h": 125
+   }
+  },
+  "result_fail": {
+   "image": "result_fail.png",
+   "back_arrow": {
+    "x": 60,
+    "y": 72,
+    "w": 95,
+    "h": 80
+   },
+   "stars": [
+    {
+     "x": 795,
+     "y": 437,
+     "w": 90,
+     "h": 87
+    },
+    {
+     "x": 915,
+     "y": 437,
+     "w": 90,
+     "h": 87
+    },
+    {
+     "x": 1035,
+     "y": 437,
+     "w": 90,
+     "h": 87
+    }
+   ],
+   "steps_value": {
+    "x": 1000,
+    "y": 612,
+    "w": 262,
+    "h": 60
+   },
+   "penalties_value": {
+    "x": 1000,
+    "y": 708,
+    "w": 262,
+    "h": 60
+   },
+   "button": {
+    "id": "try_again",
+    "x": 518,
+    "y": 862,
+    "w": 884,
+    "h": 125
+   }
+  }
+ },
+ "levels": {
+  "1.1": {
+   "image": "level_1_1.png",
+   "buttons": [
+    {
+     "id": "preorder_traversal",
+     "label": "Preorder Traversal",
+     "x": 54,
+     "y": 384,
+     "w": 251,
+     "h": 77
+    },
+    {
+     "id": "inorder_traversal",
+     "label": "Inorder Traversal",
+     "x": 54,
+     "y": 500,
+     "w": 251,
+     "h": 77
+    },
+    {
+     "id": "postorder_traversal",
+     "label": "Postorder Traversal",
+     "x": 54,
+     "y": 618,
+     "w": 251,
+     "h": 77
+    },
+    {
+     "id": "level_order",
+     "label": "Level Order",
+     "x": 54,
+     "y": 739,
+     "w": 251,
+     "h": 77
+    }
+   ]
+  },
+  "1.2": {
+   "image": "level_1_2.png",
+   "buttons": [
+    {
+     "id": "build_from_preorder_plus_inorder",
+     "label": "Build from Preorder + Inorder",
+     "x": 54,
+     "y": 354,
+     "w": 258,
+     "h": 111
+    },
+    {
+     "id": "build_from_postorder_plus_inorder",
+     "label": "Build from Postorder + Inorder",
+     "x": 54,
+     "y": 504,
+     "w": 258,
+     "h": 111
+    },
+    {
+     "id": "clear_restart_construction",
+     "label": "Clear / Restart Construction",
+     "x": 54,
+     "y": 654,
+     "w": 258,
+     "h": 111
+    },
+    {
+     "id": "submit_tree",
+     "label": "Submit Tree",
+     "x": 59,
+     "y": 804,
+     "w": 258,
+     "h": 65
+    }
+   ]
+  },
+  "1.3": {
+   "image": "level_1_3.png",
+   "buttons": [
+    {
+     "id": "calculate_height",
+     "label": "Calculate Height",
+     "x": 57,
+     "y": 354,
+     "w": 273,
+     "h": 120,
+     "input": {
+      "x": 206,
+      "y": 370,
+      "w": 110,
+      "h": 87
+     }
+    },
+    {
+     "id": "calculate_diameter",
+     "label": "Calculate Diameter",
+     "x": 59,
+     "y": 543,
+     "w": 274,
+     "h": 120,
+     "input": {
+      "x": 206,
+      "y": 560,
+      "w": 110,
+      "h": 86
+     }
+    },
+    {
+     "id": "submit_answer",
+     "label": "Submit Answer",
+     "x": 62,
+     "y": 732,
+     "w": 268,
+     "h": 90
+    }
+   ]
+  },
+  "1.4": {
+   "image": "level_1_4.png",
+   "buttons": [
+    {
+     "id": "select_first_room",
+     "label": "Select First Room",
+     "x": 76,
+     "y": 345,
+     "w": 255,
+     "h": 81
+    },
+    {
+     "id": "select_second_room",
+     "label": "Select Second Room",
+     "x": 76,
+     "y": 458,
+     "w": 255,
+     "h": 81
+    },
+    {
+     "id": "find_lca",
+     "label": "Find LCA",
+     "x": 76,
+     "y": 570,
+     "w": 255,
+     "h": 81,
+     "input": {
+      "x": 213,
+      "y": 580,
+      "w": 103,
+      "h": 62
+     }
+    },
+    {
+     "id": "show_path",
+     "label": "Show Path",
+     "x": 76,
+     "y": 682,
+     "w": 256,
+     "h": 82,
+     "input": {
+      "x": 213,
+      "y": 692,
+      "w": 103,
+      "h": 62
+     }
+    },
+    {
+     "id": "submit_answer",
+     "label": "Submit Answer",
+     "x": 76,
+     "y": 798,
+     "w": 255,
+     "h": 81
+    }
+   ]
+  },
+  "1.5": {
+   "image": "level_1_5.png",
+   "buttons": [
+    {
+     "id": "select_node",
+     "label": "Select Node",
+     "x": 59,
+     "y": 384,
+     "w": 279,
+     "h": 90
+    },
+    {
+     "id": "swap_left_and_right_children",
+     "label": "Swap Left and Right Children",
+     "x": 57,
+     "y": 509,
+     "w": 281,
+     "h": 115
+    },
+    {
+     "id": "auto_mirror",
+     "label": "Auto Mirror",
+     "x": 54,
+     "y": 659,
+     "w": 284,
+     "h": 90
+    },
+    {
+     "id": "submit_tree",
+     "label": "Submit Tree",
+     "x": 54,
+     "y": 784,
+     "w": 284,
+     "h": 90
+    }
+   ]
+  },
+  "2.1": {
+   "image": "level_2_1.png",
+   "buttons": [
+    {
+     "id": "search",
+     "label": "Search",
+     "x": 59,
+     "y": 384,
+     "w": 279,
+     "h": 90
+    },
+    {
+     "id": "enter_target_value",
+     "label": "Enter Target Value",
+     "x": 56,
+     "y": 513,
+     "w": 280,
+     "h": 115,
+     "input": {
+      "x": 226,
+      "y": 533,
+      "w": 99,
+      "h": 75
+     }
+    },
+    {
+     "id": "submit_search",
+     "label": "Submit Search",
+     "x": 52,
+     "y": 666,
+     "w": 284,
+     "h": 91
+    }
+   ]
+  },
+  "2.2": {
+   "image": "level_2_2.png",
+   "buttons": [
+    {
+     "id": "insert",
+     "label": "Insert",
+     "x": 59,
+     "y": 384,
+     "w": 279,
+     "h": 90,
+     "input": {
+      "x": 183,
+      "y": 396,
+      "w": 128,
+      "h": 67
+     }
+    },
+    {
+     "id": "submit_insert",
+     "label": "Submit Insert",
+     "x": 59,
+     "y": 529,
+     "w": 279,
+     "h": 90
+    }
+   ]
+  },
+  "2.3": {
+   "image": "level_2_3.png",
+   "buttons": [
+    {
+     "id": "delete",
+     "label": "Delete",
+     "x": 57,
+     "y": 345,
+     "w": 273,
+     "h": 68
+    },
+    {
+     "id": "enter_node_value",
+     "label": "Enter Node Value",
+     "x": 57,
+     "y": 438,
+     "w": 274,
+     "h": 86,
+     "input": {
+      "x": 193,
+      "y": 450,
+      "w": 119,
+      "h": 57
+     }
+    },
+    {
+     "id": "identify_deletion_case",
+     "label": "Identify Deletion Case",
+     "x": 64,
+     "y": 550,
+     "w": 269,
+     "h": 225,
+     "radios": [
+      {
+       "id": "leaf_node",
+       "x": 95,
+       "y": 619,
+       "w": 228,
+       "h": 34
+      },
+      {
+       "id": "one_child",
+       "x": 95,
+       "y": 664,
+       "w": 228,
+       "h": 34
+      },
+      {
+       "id": "two_children",
+       "x": 95,
+       "y": 712,
+       "w": 228,
+       "h": 34
+      }
+     ]
+    },
+    {
+     "id": "confirm_delete",
+     "label": "Confirm Delete",
+     "x": 59,
+     "y": 800,
+     "w": 274,
+     "h": 68
+    }
+   ]
+  },
+  "2.4": {
+   "image": "level_2_4.png",
+   "buttons": [
+    {
+     "id": "enter_min_value",
+     "label": "Enter Min Value",
+     "x": 59,
+     "y": 354,
+     "w": 279,
+     "h": 114,
+     "input": {
+      "x": 200,
+      "y": 372,
+      "w": 120,
+      "h": 78
+     }
+    },
+    {
+     "id": "enter_max_value",
+     "label": "Enter Max Value",
+     "x": 59,
+     "y": 510,
+     "w": 279,
+     "h": 114,
+     "input": {
+      "x": 204,
+      "y": 528,
+      "w": 120,
+      "h": 79
+     }
+    },
+    {
+     "id": "execute_range_query",
+     "label": "Execute Range Query",
+     "x": 59,
+     "y": 666,
+     "w": 279,
+     "h": 90
+    }
+   ]
+  },
+  "2.5": {
+   "image": "level_2_5.png",
+   "buttons": [
+    {
+     "id": "search",
+     "label": "Search",
+     "x": 59,
+     "y": 384,
+     "w": 279,
+     "h": 90
+    },
+    {
+     "id": "enter_target_value",
+     "label": "Enter Target Value",
+     "x": 52,
+     "y": 507,
+     "w": 284,
+     "h": 121,
+     "input": {
+      "x": 226,
+      "y": 533,
+      "w": 99,
+      "h": 68
+     }
+    },
+    {
+     "id": "submit_search",
+     "label": "Submit Search",
+     "x": 54,
+     "y": 660,
+     "w": 284,
+     "h": 91
+    }
+   ]
+  },
+  "3.1": {
+   "image": "level_3_1.png",
+   "buttons": [
+    {
+     "id": "search_unbalanced_node",
+     "label": "Search Unbalanced Node",
+     "x": 58,
+     "y": 360,
+     "w": 280,
+     "h": 114
+    },
+    {
+     "id": "check_balance_factor",
+     "label": "Check Balance Factor",
+     "x": 57,
+     "y": 509,
+     "w": 279,
+     "h": 114
+    },
+    {
+     "id": "submit_selection",
+     "label": "Submit Selection",
+     "x": 52,
+     "y": 658,
+     "w": 284,
+     "h": 90
+    }
+   ]
+  },
+  "3.2": {
+   "image": "level_3_2.png",
+   "buttons": [
+    {
+     "id": "select_pivot",
+     "label": "Select Pivot",
+     "x": 57,
+     "y": 360,
+     "w": 281,
+     "h": 87
+    },
+    {
+     "id": "left_rotation",
+     "label": "Left Rotation",
+     "x": 57,
+     "y": 480,
+     "w": 281,
+     "h": 87
+    },
+    {
+     "id": "right_rotation",
+     "label": "Right Rotation",
+     "x": 58,
+     "y": 600,
+     "w": 281,
+     "h": 87
+    },
+    {
+     "id": "confirm_rotation",
+     "label": "Confirm Rotation",
+     "x": 59,
+     "y": 720,
+     "w": 280,
+     "h": 87
+    }
+   ]
+  },
+  "3.3": {
+   "image": "level_3_3.png",
+   "buttons": [
+    {
+     "id": "identify_rotation_case",
+     "label": "Identify Rotation Case",
+     "x": 57,
+     "y": 342,
+     "w": 284,
+     "h": 213,
+     "radios": [
+      {
+       "id": "lr",
+       "x": 69,
+       "y": 446,
+       "w": 260,
+       "h": 34
+      },
+      {
+       "id": "rl",
+       "x": 69,
+       "y": 489,
+       "w": 260,
+       "h": 34
+      }
+     ]
+    },
+    {
+     "id": "select_pivot",
+     "label": "Select Pivot",
+     "x": 60,
+     "y": 570,
+     "w": 281,
+     "h": 88
+    },
+    {
+     "id": "rotate_left",
+     "label": "Rotate Left",
+     "x": 52,
+     "y": 672,
+     "w": 135,
+     "h": 87
+    },
+    {
+     "id": "rotate_right",
+     "label": "Rotate Right",
+     "x": 213,
+     "y": 672,
+     "w": 137,
+     "h": 87
+    },
+    {
+     "id": "confirm_rotation",
+     "label": "Confirm Rotation",
+     "x": 60,
+     "y": 774,
+     "w": 281,
+     "h": 87
+    }
+   ]
+  },
+  "3.4": {
+   "image": "level_3_4.png",
+   "buttons": [
+    {
+     "id": "insert",
+     "label": "Insert",
+     "x": 66,
+     "y": 341,
+     "w": 274,
+     "h": 101,
+     "input": {
+      "x": 177,
+      "y": 360,
+      "w": 108,
+      "h": 57
+     }
+    },
+    {
+     "id": "predict_rotation",
+     "label": "Predict Rotation",
+     "x": 65,
+     "y": 458,
+     "w": 274,
+     "h": 282,
+     "radios": [
+      {
+       "id": "none",
+       "x": 90,
+       "y": 530,
+       "w": 239,
+       "h": 34
+      },
+      {
+       "id": "ll",
+       "x": 90,
+       "y": 569,
+       "w": 239,
+       "h": 34
+      },
+      {
+       "id": "rr",
+       "x": 90,
+       "y": 607,
+       "w": 239,
+       "h": 34
+      },
+      {
+       "id": "lr",
+       "x": 90,
+       "y": 645,
+       "w": 239,
+       "h": 34
+      },
+      {
+       "id": "rl",
+       "x": 90,
+       "y": 684,
+       "w": 239,
+       "h": 34
+      }
+     ]
+    },
+    {
+     "id": "submit_prediction",
+     "label": "Submit Prediction",
+     "x": 69,
+     "y": 756,
+     "w": 270,
+     "h": 83
+    }
+   ]
+  },
+  "3.5": {
+   "image": "level_3_5.png",
+   "buttons": [
+    {
+     "id": "find_kth_smallest",
+     "label": "Find Kth Smallest",
+     "x": 54,
+     "y": 352,
+     "w": 284,
+     "h": 76
+    },
+    {
+     "id": "enter_k",
+     "label": "Enter K",
+     "x": 56,
+     "y": 463,
+     "w": 281,
+     "h": 88,
+     "input": {
+      "x": 221,
+      "y": 473,
+      "w": 111,
+      "h": 63
+     }
+    },
+    {
+     "id": "calculate_rank",
+     "label": "Calculate Rank",
+     "x": 56,
+     "y": 567,
+     "w": 281,
+     "h": 87
+    },
+    {
+     "id": "enter_target_value",
+     "label": "Enter Target Value",
+     "x": 56,
+     "y": 671,
+     "w": 281,
+     "h": 95,
+     "input": {
+      "x": 221,
+      "y": 689,
+      "w": 111,
+      "h": 64
+     }
+    },
+    {
+     "id": "submit_answer",
+     "label": "Submit Answer",
+     "x": 56,
+     "y": 783,
+     "w": 281,
+     "h": 87
+    }
+   ]
+  },
+  "4.1": {
+   "image": "level_4_1.png",
+   "buttons": [
+    {
+     "id": "swap_selected",
+     "label": "Swap Selected",
+     "x": 54,
+     "y": 376,
+     "w": 291,
+     "h": 77
+    },
+    {
+     "id": "auto_build_hint",
+     "label": "Auto Build (Hint)",
+     "x": 54,
+     "y": 498,
+     "w": 291,
+     "h": 77
+    },
+    {
+     "id": "confirm_heap",
+     "label": "Confirm Heap",
+     "x": 54,
+     "y": 619,
+     "w": 291,
+     "h": 77
+    }
+   ],
+   "tree_area": {
+    "x": 398,
+    "y": 265,
+    "w": 1100,
+    "h": 525
+   },
+   "array_strip": {
+    "outer": {
+     "x": 519,
+     "y": 802,
+     "w": 960,
+     "h": 104
+    },
+    "cells": [
+     {
+      "index": 0,
+      "x": 520,
+      "y": 820,
+      "w": 128,
+      "h": 64
+     },
+     {
+      "index": 1,
+      "x": 648,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 2,
+      "x": 736,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 3,
+      "x": 824,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 4,
+      "x": 912,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 5,
+      "x": 999,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 6,
+      "x": 1087,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 7,
+      "x": 1174,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 8,
+      "x": 1262,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 9,
+      "x": 1350,
+      "y": 820,
+      "w": 129,
+      "h": 64
+     }
+    ],
+    "label_array": {
+     "x": 424,
+     "y": 845,
+     "w": 59,
+     "h": 25
+    }
+   }
+  },
+  "4.2": {
+   "image": "level_4_2.png",
+   "buttons": [
+    {
+     "id": "select_node",
+     "label": "Select Node",
+     "x": 54,
+     "y": 376,
+     "w": 291,
+     "h": 77
+    },
+    {
+     "id": "sift_up",
+     "label": "Sift Up",
+     "x": 54,
+     "y": 498,
+     "w": 291,
+     "h": 77
+    },
+    {
+     "id": "sift_down",
+     "label": "Sift Down",
+     "x": 55,
+     "y": 619,
+     "w": 291,
+     "h": 77
+    },
+    {
+     "id": "confirm_parent_child_relationships",
+     "label": "Confirm Parent-Child Relationships",
+     "x": 58,
+     "y": 746,
+     "w": 290,
+     "h": 108
+    }
+   ],
+   "tree_area": {
+    "x": 398,
+    "y": 265,
+    "w": 1100,
+    "h": 525
+   },
+   "array_strip": {
+    "outer": {
+     "x": 519,
+     "y": 802,
+     "w": 960,
+     "h": 104
+    },
+    "cells": [
+     {
+      "index": 0,
+      "x": 520,
+      "y": 820,
+      "w": 128,
+      "h": 64
+     },
+     {
+      "index": 1,
+      "x": 648,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 2,
+      "x": 736,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 3,
+      "x": 824,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 4,
+      "x": 912,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 5,
+      "x": 999,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 6,
+      "x": 1087,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 7,
+      "x": 1174,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 8,
+      "x": 1262,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 9,
+      "x": 1350,
+      "y": 820,
+      "w": 129,
+      "h": 64
+     }
+    ],
+    "label_array": {
+     "x": 424,
+     "y": 845,
+     "w": 59,
+     "h": 25
+    }
+   }
+  },
+  "4.3": {
+   "image": "level_4_3.png",
+   "buttons": [
+    {
+     "id": "extract_maximum",
+     "label": "Extract Maximum",
+     "x": 54,
+     "y": 376,
+     "w": 291,
+     "h": 77
+    },
+    {
+     "id": "heapify",
+     "label": "Heapify",
+     "x": 54,
+     "y": 498,
+     "w": 291,
+     "h": 77
+    },
+    {
+     "id": "confirm_extraction",
+     "label": "Confirm Extraction",
+     "x": 55,
+     "y": 619,
+     "w": 291,
+     "h": 77
+    }
+   ],
+   "tree_area": {
+    "x": 398,
+    "y": 265,
+    "w": 1100,
+    "h": 525
+   },
+   "array_strip": {
+    "outer": {
+     "x": 519,
+     "y": 802,
+     "w": 960,
+     "h": 104
+    },
+    "cells": [
+     {
+      "index": 0,
+      "x": 520,
+      "y": 820,
+      "w": 128,
+      "h": 64
+     },
+     {
+      "index": 1,
+      "x": 648,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 2,
+      "x": 736,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 3,
+      "x": 824,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 4,
+      "x": 912,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 5,
+      "x": 999,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 6,
+      "x": 1087,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 7,
+      "x": 1174,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 8,
+      "x": 1262,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 9,
+      "x": 1350,
+      "y": 820,
+      "w": 129,
+      "h": 64
+     }
+    ],
+    "label_array": {
+     "x": 424,
+     "y": 845,
+     "w": 59,
+     "h": 25
+    }
+   }
+  },
+  "4.4": {
+   "image": "level_4_4.png",
+   "buttons": [
+    {
+     "id": "insert",
+     "label": "Insert",
+     "x": 54,
+     "y": 376,
+     "w": 291,
+     "h": 77,
+     "input": {
+      "x": 206,
+      "y": 382,
+      "w": 111,
+      "h": 64
+     }
+    },
+    {
+     "id": "heapify",
+     "label": "Heapify",
+     "x": 54,
+     "y": 498,
+     "w": 291,
+     "h": 77
+    },
+    {
+     "id": "extract_maximum",
+     "label": "Extract Maximum",
+     "x": 54,
+     "y": 624,
+     "w": 291,
+     "h": 77
+    },
+    {
+     "id": "check_max_heap",
+     "label": "Check Max Heap",
+     "x": 54,
+     "y": 751,
+     "w": 291,
+     "h": 77
+    }
+   ],
+   "tree_area": {
+    "x": 398,
+    "y": 265,
+    "w": 1100,
+    "h": 525
+   },
+   "array_strip": {
+    "outer": {
+     "x": 519,
+     "y": 802,
+     "w": 960,
+     "h": 104
+    },
+    "cells": [
+     {
+      "index": 0,
+      "x": 520,
+      "y": 820,
+      "w": 128,
+      "h": 64
+     },
+     {
+      "index": 1,
+      "x": 648,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 2,
+      "x": 736,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 3,
+      "x": 824,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 4,
+      "x": 912,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 5,
+      "x": 999,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 6,
+      "x": 1087,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 7,
+      "x": 1174,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 8,
+      "x": 1262,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 9,
+      "x": 1350,
+      "y": 820,
+      "w": 129,
+      "h": 64
+     }
+    ],
+    "label_array": {
+     "x": 424,
+     "y": 845,
+     "w": 59,
+     "h": 25
+    }
+   }
+  },
+  "4.5": {
+   "image": "level_4_5.png",
+   "buttons": [
+    {
+     "id": "build_max_heap",
+     "label": "Build Max Heap",
+     "x": 54,
+     "y": 376,
+     "w": 291,
+     "h": 77
+    },
+    {
+     "id": "extract_maximum",
+     "label": "Extract Maximum",
+     "x": 54,
+     "y": 498,
+     "w": 291,
+     "h": 77
+    },
+    {
+     "id": "heapify",
+     "label": "Heapify",
+     "x": 54,
+     "y": 624,
+     "w": 291,
+     "h": 77
+    },
+    {
+     "id": "verify_sorted_array",
+     "label": "Verify Sorted Array",
+     "x": 54,
+     "y": 751,
+     "w": 291,
+     "h": 77
+    }
+   ],
+   "tree_area": {
+    "x": 398,
+    "y": 265,
+    "w": 1100,
+    "h": 525
+   },
+   "array_strip": {
+    "outer": {
+     "x": 519,
+     "y": 802,
+     "w": 960,
+     "h": 104
+    },
+    "cells": [
+     {
+      "index": 0,
+      "x": 520,
+      "y": 820,
+      "w": 128,
+      "h": 64
+     },
+     {
+      "index": 1,
+      "x": 648,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 2,
+      "x": 736,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 3,
+      "x": 824,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 4,
+      "x": 912,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 5,
+      "x": 999,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 6,
+      "x": 1087,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 7,
+      "x": 1174,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 8,
+      "x": 1262,
+      "y": 820,
+      "w": 88,
+      "h": 64
+     },
+     {
+      "index": 9,
+      "x": 1350,
+      "y": 820,
+      "w": 129,
+      "h": 64
+     }
+    ],
+    "label_array": {
+     "x": 424,
+     "y": 845,
+     "w": 59,
+     "h": 25
+    }
+   }
+  }
+ }
+}
