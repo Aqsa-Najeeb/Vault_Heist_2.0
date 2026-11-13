@@ -30,10 +30,10 @@ string runMainMenu(RenderWindow& window)
         "EXIT GAME"
     };
 
-    const float buttonX[6] = { 1430.f, 1450.f, 1450.f, 1450.f, 1450.f, 1450.f };
-    const float buttonY[6] = { 120.f,  275.f,  435.f,  590.f,  745.f,  900.f };
-    const float buttonW[6] = { 425.f,  250.f,  265.f,  395.f,  265.f,  305.f };
-    const float buttonH[6] = { 100.f,   90.f,   95.f,   95.f,   95.f,   95.f };
+    const float buttonX[6] = { 1446.f, 1450.f, 1450.f, 1450.f, 1450.f, 1450.f };
+    const float buttonY[6] = { 140.f,  280.f,  435.f,  591.f,  747.f,  902.f };
+    const float buttonW[6] = { 423.f,  248.f,  261.f,  391.f,  257.f,  300.f };
+    const float buttonH[6] = { 95.f,   95.f,   96.f,   95.f,   95.f,   95.f };
 
     int hoveredItem = -1;
     bool showDebugBoxes = false;
