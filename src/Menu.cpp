@@ -80,7 +80,7 @@ string runMainMenu(RenderWindow& window)
 
         background.setScale({ scaleX, scaleY });
 
-        const Vector2i mousePosition = sf::Mouse::getPosition(window);
+        const Vector2i mousePosition = Mouse::getPosition(window);
         const float mouseX = static_cast<float>(mousePosition.x) / scaleX;
         const float mouseY = static_cast<float>(mousePosition.y) / scaleY;
 

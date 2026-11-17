@@ -25,7 +25,7 @@ static void drawStar(RenderWindow& window, float cx, float cy, float radius, boo
 
     if (filled)
     {
-        star.setFillColor(Color(255, 218, 145));
+        star.setFillColor(Color(78, 126, 251));
     }
     else
     {
@@ -43,7 +43,7 @@ string runCampaignMap(RenderWindow& window, const Progress& progress)
 
     if (!backgroundTexture.loadFromFile("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\images\\campaign_ma.png"))
     {
-        return "ASSET_ERROR";
+        return "Can't_load_image";
     }
 
     Sprite background(backgroundTexture);
@@ -69,7 +69,7 @@ string runCampaignMap(RenderWindow& window, const Progress& progress)
 
     int hoveredItem = -1;
     bool showDebugBoxes = false;
-    bool unlockAll = false;
+    static bool unlockAll = false;
 
     while (window.isOpen())
     {
@@ -78,18 +78,18 @@ string runCampaignMap(RenderWindow& window, const Progress& progress)
             if (event->is<Event::Closed>())
             {
                 window.close();
-                return "EXIT GAME";
+                return "Exit";
             }
 
             if (const auto* keyPressed = event->getIf<Event::KeyPressed>())
             {
                 if (keyPressed->code == Keyboard::Key::Escape)
-                    return "BACK";
+                    return "Back";
                 
                 if (keyPressed->code == Keyboard::Key::F1)
                     showDebugBoxes = !showDebugBoxes;
                 
-                if (keyPressed->code == Keyboard::Key::F2)
+                if (keyPressed->code == Keyboard::Key::U)
                     unlockAll = !unlockAll;
             }
 
@@ -107,7 +107,7 @@ string runCampaignMap(RenderWindow& window, const Progress& progress)
         const Vector2u windowSize = window.getSize();
         const Vector2u imageSize = backgroundTexture.getSize();
 
-        if (windowSize.x == 0 || windowSize.y == 0 || imageSize.x == 0 || imageSize.y == 0)
+        if (windowSize.x == 0 || windowSize.y == 0 )
         {
             continue;
         }
@@ -163,7 +163,8 @@ string runCampaignMap(RenderWindow& window, const Progress& progress)
             {
                 for (int s = 0; s < 3; ++s)
                 {
-                    const float cx = px + pw - (52.f - 18.f * static_cast<float>(s)) * scaleX;
+                    const float starGap = 15.f;
+                    const float cx = px + pw - (25.f + starGap * (2.f - static_cast<float>(s))) * scaleX;
                     const float cy = py + ph / 2.f;
                     drawStar(window, cx, cy, 8.f * scaleX, progress.stars[i] > s);
                 }
@@ -193,12 +194,12 @@ string runCampaignMap(RenderWindow& window, const Progress& progress)
             outline.setSize({ buttonW * scaleX, buttonH * scaleY });
             outline.setFillColor(Color::Transparent);
             outline.setOutlineThickness(3.f);
-            outline.setOutlineColor(Color(255, 218, 145, 230));
+            outline.setOutlineColor(Color(78, 255, 152, 230));
             window.draw(outline);
         }
 
         window.display();
     }
 
-    return "EXIT GAME";
+    return "Exit";
 }

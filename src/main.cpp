@@ -8,6 +8,7 @@ using namespace sf;
 
 string runMainMenu(RenderWindow& window);
 string runCampaignMap(RenderWindow& window, const Progress& progress);
+string runLevel(RenderWindow& window, const string& levelId);
 
 int main()
 {
@@ -28,15 +29,23 @@ int main()
         {
             screen = runCampaignMap(window, progress);
 
-            if (screen == "BACK")
+            if (screen == "Back")
                 screen = "MENU";
+
+            if (screen.rfind("LEVEL ", 0) == 0)
+            {
+                string levelId = screen.substr(6);
+                string levelResult = runLevel(window, levelId);
+
+                if (levelResult == "Exit")
+                    break;
+            }
         }
         else if (screen.rfind("LEVEL ", 0) == 0)
         {
             screen = "CAMPAIGN MAP";
         }
-        else if (screen == "ENDLESS" || screen == "SANDBOX" ||
-            screen == "LEADERBOARD" || screen == "SETTINGS")
+        else if (screen == "ENDLESS" || screen == "SANDBOX" || screen == "LEADERBOARD" || screen == "SETTINGS")
         {
             screen = "MENU";
         }
