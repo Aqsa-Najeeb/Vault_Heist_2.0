@@ -1,37 +1,59 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include <string>
+#include "User.h"
+
 using namespace std;
 using namespace sf;
 
 string runMainMenu(RenderWindow& window);
+string runCampaignMap(RenderWindow& window, const Progress& progress);
 
 int main()
 {
     RenderWindow window(VideoMode({ 1920, 1080 }), "Vault Heist", State::Fullscreen);
 
-    string choice = runMainMenu(window);
+    Progress progress;
+    loadProgress(progress);
 
-    if (choice == "CAMPAIGN MAP")
+    string screen = "MENU";
+
+    while (window.isOpen())
     {
-        // CampaignMap.cpp
+        if (screen == "MENU")
+        {
+            screen = runMainMenu(window);
+        }
+        else if (screen == "CAMPAIGN MAP")
+        {
+            screen = runCampaignMap(window, progress);
+
+            if (screen == "BACK")
+                screen = "MENU";
+        }
+        else if (screen.rfind("LEVEL ", 0) == 0)
+        {
+            screen = "CAMPAIGN MAP";
+        }
+        else if (screen == "ENDLESS" || screen == "SANDBOX" ||
+            screen == "LEADERBOARD" || screen == "SETTINGS")
+        {
+            screen = "MENU";
+        }
+        else if (screen == "ASSET_ERROR")
+        {
+            cerr << "Could not load an image. Check the file paths." << endl;
+            window.close();
+        }
+        else if (screen == "EXIT GAME")
+        {
+            window.close();
+        }
+        else
+        {
+            screen = "MENU";
+        }
     }
-    else if (choice == "ENDLESS")
-    {
-        // EndlessMode.cpp
-    }
-    else if (choice == "SANDBOX")
-    {
-        // Sandbox.cpp
-    }
-    else if (choice == "LEADERBOARD")
-    {
-        // Call Leaderboard.cpp
-    }
-    else if (choice == "SETTINGS")
-    {
-        // Settings.cpp
-    }
-    else if (choice == "EXIT GAME")
-    {
-        window.close();
-    }
+
+    return 0;
 }

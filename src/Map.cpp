@@ -41,7 +41,7 @@ string runCampaignMap(RenderWindow& window, const Progress& progress)
 {
     Texture backgroundTexture;
 
-    if (!backgroundTexture.loadFromFile("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\images\\campaign_map.png"))
+    if (!backgroundTexture.loadFromFile("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\images\\campaign_ma.png"))
     {
         return "ASSET_ERROR";
     }
