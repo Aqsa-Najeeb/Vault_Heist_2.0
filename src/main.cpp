@@ -8,7 +8,7 @@ using namespace sf;
 
 string runMainMenu(RenderWindow& window);
 string runCampaignMap(RenderWindow& window, const Progress& progress);
-string runLevel(RenderWindow& window, const string& levelId);
+string runLevel(RenderWindow& window, const string& levelId, Progress& progress);
 
 int main()
 {
@@ -35,7 +35,7 @@ int main()
             if (screen.rfind("LEVEL ", 0) == 0)
             {
                 string levelId = screen.substr(6);
-                string levelResult = runLevel(window, levelId);
+                string levelResult = runLevel(window, levelId, progress);
 
                 if (levelResult == "Exit")
                     break;
