@@ -2,7 +2,6 @@
 
 using namespace std;
 
-// Concrete Stack for TreeNodes (no templates, no library containers)
 class NodeStack
 {
 private:
@@ -22,6 +21,7 @@ public:
     {
         if (m_top >= 0)
             return m_data[m_top--];
+
         return nullptr;
     }
 
@@ -31,7 +31,6 @@ public:
     }
 };
 
-// Concrete Queue for TreeNodes (no templates, no library containers)
 class NodeQueue
 {
 private:
@@ -71,10 +70,8 @@ public:
     }
 };
 
-BinaryTree::BinaryTree()
-    : m_root(nullptr), m_nextId(1)
-{
-}
+BinaryTree::BinaryTree() : m_root(nullptr), m_nextId(1)
+{}
 
 BinaryTree::~BinaryTree()
 {
@@ -83,15 +80,19 @@ BinaryTree::~BinaryTree()
 
 TreeNode* BinaryTree::copyNode(TreeNode* node, TreeNode* parent)
 {
-    if (!node) return nullptr;
+    if (!node)
+    {
+        return nullptr;
+    }
+
     TreeNode* newNode = new TreeNode(node->id, node->value, parent);
     newNode->left = copyNode(node->left, newNode);
     newNode->right = copyNode(node->right, newNode);
+    
     return newNode;
 }
 
-BinaryTree::BinaryTree(const BinaryTree& other)
-    : m_root(nullptr), m_nextId(other.m_nextId)
+BinaryTree::BinaryTree(const BinaryTree& other) : m_root(nullptr), m_nextId(other.m_nextId)
 {
     m_root = copyNode(other.m_root, nullptr);
 }
@@ -104,17 +105,17 @@ BinaryTree& BinaryTree::operator=(const BinaryTree& other)
         m_nextId = other.m_nextId;
         m_root = copyNode(other.m_root, nullptr);
     }
+
     return *this;
 }
 
-BinaryTree::BinaryTree(BinaryTree&& other) noexcept
-    : m_root(other.m_root), m_nextId(other.m_nextId)
+BinaryTree::BinaryTree(BinaryTree&& other) : m_root(other.m_root), m_nextId(other.m_nextId)
 {
     other.m_root = nullptr;
     other.m_nextId = 1;
 }
 
-BinaryTree& BinaryTree::operator=(BinaryTree&& other) noexcept
+BinaryTree& BinaryTree::operator=(BinaryTree&& other) 
 {
     if (this != &other)
     {
@@ -156,7 +157,6 @@ void BinaryTree::clear()
     m_nextId = 1;
 }
 
-// ---------------- Recursive Traversals ----------------
 
 static void recPre(TreeNode* node, TraversalResult& out)
 {
@@ -228,7 +228,6 @@ TraversalResult BinaryTree::levelOrderRecursive() const
     return out;
 }
 
-// ---------------- Iterative Traversals ----------------
 
 TraversalResult BinaryTree::preorderIterative() const
 {
@@ -320,31 +319,34 @@ TraversalResult BinaryTree::levelOrderIterative() const
 
 TraversalResult BinaryTree::preorder(bool iterative) const
 {
-    return iterative ? preorderIterative() : preorderRecursive();
+    return (iterative)? preorderIterative() : preorderRecursive();
 }
 
 TraversalResult BinaryTree::inorder(bool iterative) const
 {
-    return iterative ? inorderIterative() : inorderRecursive();
+    return (iterative)? inorderIterative() : inorderRecursive();
 }
 
 TraversalResult BinaryTree::postorder(bool iterative) const
 {
-    return iterative ? postorderIterative() : postorderRecursive();
+    return (iterative)? postorderIterative() : postorderRecursive();
 }
 
 TraversalResult BinaryTree::levelOrder(bool iterative) const
 {
-    return iterative ? levelOrderIterative() : levelOrderRecursive();
+    return (iterative)? levelOrderIterative() : levelOrderRecursive();
 }
-
-// ---------------- Height & Diameter ----------------
 
 int BinaryTree::height(TreeNode* node) const
 {
-    if (!node) return 0;
+    if (!node)
+    {
+        return 0;
+    }
+    
     int lh = height(node->left);
     int rh = height(node->right);
+    
     return 1 + (lh > rh ? lh : rh);
 }
 
@@ -355,7 +357,11 @@ int BinaryTree::height() const
 
 int BinaryTree::calculateDiameter(TreeNode* node, int& maxDiameter) const
 {
-    if (!node) return 0;
+    if (!node)
+    {
+        return 0;
+    }
+
     int lh = calculateDiameter(node->left, maxDiameter);
     int rh = calculateDiameter(node->right, maxDiameter);
 
@@ -371,20 +377,31 @@ int BinaryTree::diameter() const
 {
     int maxDiameter = 0;
     calculateDiameter(m_root, maxDiameter);
+    
     return maxDiameter;
 }
 
-// ---------------- LCA & Path ----------------
 
 TreeNode* BinaryTree::findLca(TreeNode* node, int a, int b) const
 {
-    if (!node) return nullptr;
-    if (node->value == a || node->value == b) return node;
+    if (!node) 
+    { 
+        return nullptr; 
+    }
+    
+    if (node->value == a || node->value == b)
+    {
+        return node;
+    }
 
     TreeNode* leftLca = findLca(node->left, a, b);
     TreeNode* rightLca = findLca(node->right, a, b);
 
-    if (leftLca && rightLca) return node;
+    if (leftLca && rightLca)
+    {
+        return node;
+    }
+
     return leftLca ? leftLca : rightLca;
 }
 
@@ -395,11 +412,22 @@ TreeNode* BinaryTree::lca(int a, int b) const
 
 bool BinaryTree::findPath(TreeNode* node, int val, TraversalResult& path) const
 {
-    if (!node) return false;
+    if (!node)
+    {
+        return false;
+    }
+
     path.add(node->value);
 
-    if (node->value == val) return true;
-    if (findPath(node->left, val, path) || findPath(node->right, val, path)) return true;
+    if (node->value == val)
+    {
+        return true;
+    }
+
+    if (findPath(node->left, val, path) || findPath(node->right, val, path))
+    {
+        return true;
+    }
 
     path.size--;
     return false;
@@ -412,11 +440,11 @@ TraversalResult BinaryTree::pathTo(int value) const
     return path;
 }
 
-// ---------------- Mirror & Checks ----------------
-
 void BinaryTree::mirrorHelper(TreeNode* node)
 {
-    if (!node) return;
+    if (!node) 
+        return;
+    
     TreeNode* temp = node->left;
     node->left = node->right;
     node->right = temp;
@@ -432,11 +460,17 @@ void BinaryTree::mirror()
 
 bool BinaryTree::checkSameTree(TreeNode* a, TreeNode* b) const
 {
-    if (!a && !b) return true;
-    if (!a || !b) return false;
-    return (a->value == b->value) &&
-           checkSameTree(a->left, b->left) &&
-           checkSameTree(a->right, b->right);
+    if (!a && !b)
+    {
+        return true;
+    }
+    
+    if (!a || !b)
+    {
+        return false;
+    }
+    
+    return (a->value == b->value) && checkSameTree(a->left, b->left) && checkSameTree(a->right, b->right);
 }
 
 bool BinaryTree::isSameTree(const BinaryTree& other) const
@@ -446,41 +480,50 @@ bool BinaryTree::isSameTree(const BinaryTree& other) const
 
 bool BinaryTree::checkSymmetric(TreeNode* left, TreeNode* right) const
 {
-    if (!left && !right) return true;
-    if (!left || !right) return false;
-    return (left->value == right->value) &&
-           checkSymmetric(left->left, right->right) &&
-           checkSymmetric(left->right, right->left);
+    if (!left && !right)
+    {
+        return true;
+    }
+
+    if (!left || !right)
+    {
+        return false;
+    }
+
+    return (left->value == right->value) && checkSymmetric(left->left, right->right) && checkSymmetric(left->right, right->left);
 }
 
 bool BinaryTree::isSymmetric() const
 {
-    if (!m_root) return true;
+    if (!m_root)
+    {
+        return true;
+    }
     return checkSymmetric(m_root->left, m_root->right);
 }
 
-// ---------------- Reconstruction ----------------
 
-TreeNode* BinaryTree::buildFromPreIn(const int pre[], int preStart, int preEnd,
-                                     const int in[], int inStart, int inEnd,
-                                     TreeNode* parent)
+TreeNode* BinaryTree::buildFromPreIn(const int pre[], int preStart, int preEnd, const int in[], int inStart, int inEnd, TreeNode* parent)
 {
-    if (preStart > preEnd || inStart > inEnd) return nullptr;
+    if (preStart > preEnd || inStart > inEnd)
+    {
+        return nullptr;
+    }
 
     int rootVal = pre[preStart];
     TreeNode* node = new TreeNode(m_nextId++, rootVal, parent);
 
     int inIndex = inStart;
+    
     while (inIndex <= inEnd && in[inIndex] != rootVal)
     {
         inIndex++;
     }
 
     int leftLen = inIndex - inStart;
-    node->left = buildFromPreIn(pre, preStart + 1, preStart + leftLen,
-                                in, inStart, inIndex - 1, node);
-    node->right = buildFromPreIn(pre, preStart + leftLen + 1, preEnd,
-                                 in, inIndex + 1, inEnd, node);
+    
+    node->left = buildFromPreIn(pre, preStart + 1, preStart + leftLen, in, inStart, inIndex - 1, node);
+    node->right = buildFromPreIn(pre, preStart + leftLen + 1, preEnd, in, inIndex + 1, inEnd, node);
 
     return node;
 }
@@ -488,32 +531,34 @@ TreeNode* BinaryTree::buildFromPreIn(const int pre[], int preStart, int preEnd,
 void BinaryTree::build(const int pre[], const int in[], int n)
 {
     clear();
+
     if (n > 0)
     {
         m_root = buildFromPreIn(pre, 0, n - 1, in, 0, n - 1, nullptr);
     }
 }
 
-TreeNode* BinaryTree::buildFromPostIn(const int post[], int postStart, int postEnd,
-                                      const int in[], int inStart, int inEnd,
-                                      TreeNode* parent)
+TreeNode* BinaryTree::buildFromPostIn(const int post[], int postStart, int postEnd, const int in[], int inStart, int inEnd, TreeNode* parent)
 {
-    if (postStart > postEnd || inStart > inEnd) return nullptr;
+    if (postStart > postEnd || inStart > inEnd)
+    {
+        return nullptr;
+    }
 
     int rootVal = post[postEnd];
     TreeNode* node = new TreeNode(m_nextId++, rootVal, parent);
 
     int inIndex = inStart;
+    
     while (inIndex <= inEnd && in[inIndex] != rootVal)
     {
         inIndex++;
     }
 
     int leftLen = inIndex - inStart;
-    node->left = buildFromPostIn(post, postStart, postStart + leftLen - 1,
-                                 in, inStart, inIndex - 1, node);
-    node->right = buildFromPostIn(post, postStart + leftLen, postEnd - 1,
-                                  in, inIndex + 1, inEnd, node);
+
+    node->left = buildFromPostIn(post, postStart, postStart + leftLen - 1, in, inStart, inIndex - 1, node);
+    node->right = buildFromPostIn(post, postStart + leftLen, postEnd - 1, in, inIndex + 1, inEnd, node);
 
     return node;
 }
@@ -521,6 +566,7 @@ TreeNode* BinaryTree::buildFromPostIn(const int post[], int postStart, int postE
 void BinaryTree::buildPost(const int post[], const int in[], int n)
 {
     clear();
+
     if (n > 0)
     {
         m_root = buildFromPostIn(post, 0, n - 1, in, 0, n - 1, nullptr);
@@ -529,23 +575,44 @@ void BinaryTree::buildPost(const int post[], const int in[], int n)
 
 TreeNode* BinaryTree::findNode(int value) const
 {
-    if (!m_root) return nullptr;
+    if (!m_root)
+    {
+        return nullptr;
+    }
+
     NodeStack stack;
     stack.push(m_root);
 
     while (!stack.empty())
     {
         TreeNode* curr = stack.pop();
-        if (curr->value == value) return curr;
-        if (curr->right) stack.push(curr->right);
-        if (curr->left) stack.push(curr->left);
+
+        if (curr->value == value)
+        {
+            return curr;
+        }
+
+        if (curr->right)
+        {
+            stack.push(curr->right);
+        }
+        
+        if (curr->left)
+        {
+            stack.push(curr->left);
+        }
     }
+
     return nullptr;
 }
 
 int BinaryTree::countNodes(TreeNode* node) const
 {
-    if (!node) return 0;
+    if (!node)
+    {
+        return 0;
+    }
+
     return 1 + countNodes(node->left) + countNodes(node->right);
 }
 
@@ -554,14 +621,18 @@ int BinaryTree::nodeCount() const
     return countNodes(m_root);
 }
 
-// ---------------- Seeded Generator ----------------
+
+static unsigned int nextRand(unsigned int& state)
+{
+    state = state * 1664525u + 1013904223u;
+    return (state >> 16) & 0x7FFF;
+}
+
 
 BinaryTree BinaryTree::generateSeeded(int seed, int nodeCount)
 {
     BinaryTree tree;
 
-    // For level 1.1 with seed 1101: generate 7-node tree from inspiration image
-    // Root: 4, Left: 2 (1, 3), Right: 7 (6, 9)
     if (seed == 1101 || nodeCount == 7)
     {
         TreeNode* root = new TreeNode(1, 4, nullptr);
@@ -579,24 +650,28 @@ BinaryTree BinaryTree::generateSeeded(int seed, int nodeCount)
         return tree;
     }
 
-    // Generic deterministic generator
     unsigned int state = static_cast<unsigned int>(seed);
-    auto nextRand = [&state]() -> unsigned int {
-        state = state * 1664525u + 1013904223u;
-        return (state >> 16) & 0x7FFF;
-    };
 
-    if (nodeCount < 1) nodeCount = 6;
-    if (nodeCount > 15) nodeCount = 15;
+    if (nodeCount < 1)
+    {
+        nodeCount = 6;
+    }
+
+    if (nodeCount > 15)
+    {
+        nodeCount = 15;
+    }
 
     int values[16];
+    
     for (int i = 0; i < nodeCount; ++i)
     {
         values[i] = i + 1;
     }
+    
     for (int i = nodeCount - 1; i > 0; --i)
     {
-        int j = nextRand() % (i + 1);
+        int j = nextRand(state) % (i + 1);
         int tmp = values[i];
         values[i] = values[j];
         values[j] = tmp;
@@ -618,6 +693,7 @@ BinaryTree BinaryTree::generateSeeded(int seed, int nodeCount)
             parent->left = new TreeNode(tree.m_nextId++, values[assigned++], parent);
             queue.push(parent->left);
         }
+    
         if (assigned < nodeCount)
         {
             parent->right = new TreeNode(tree.m_nextId++, values[assigned++], parent);
