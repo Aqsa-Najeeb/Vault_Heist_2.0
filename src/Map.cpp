@@ -2,6 +2,7 @@
 #include <string>
 #include <cmath>
 #include "User.h"
+#include "GameModes.h"
 
 using namespace std;
 using namespace sf;
@@ -41,7 +42,8 @@ string runCampaignMap(RenderWindow& window, const Progress& progress)
 {
     Texture backgroundTexture;
 
-    if (!backgroundTexture.loadFromFile("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\images\\campaign_ma.png"))
+    if (!backgroundTexture.loadFromFile("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\images\\campaign_ma.png") &&
+        !backgroundTexture.loadFromFile("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\images\\campaign_ma.png"))
     {
         return "Can't_load_image";
     }
@@ -70,6 +72,8 @@ string runCampaignMap(RenderWindow& window, const Progress& progress)
     int hoveredItem = -1;
     bool showDebugBoxes = false;
     static bool unlockAll = false;
+    loadGameSettings();
+    const auto& settings = getGameSettings();
 
     while (window.isOpen())
     {
@@ -95,11 +99,29 @@ string runCampaignMap(RenderWindow& window, const Progress& progress)
 
             if (const auto* mousePressed = event->getIf<Event::MouseButtonPressed>())
             {
-                if (mousePressed->button == Mouse::Button::Left && hoveredItem != -1)
+                if (mousePressed->button == Mouse::Button::Left)
                 {
-                    if (hoveredItem == 20)
-                        return "ENDLESS";
-                    return string("LEVEL ") + levelIdAt(hoveredItem);
+                    const Vector2u winSize = window.getSize();
+                    const Vector2u imgSize = backgroundTexture.getSize();
+                    if (winSize.x > 0 && winSize.y > 0 && imgSize.x > 0 && imgSize.y > 0)
+                    {
+                        const float curScaleX = static_cast<float>(winSize.x) / static_cast<float>(imgSize.x);
+                        const float curScaleY = static_cast<float>(winSize.y) / static_cast<float>(imgSize.y);
+                        const float clickX = static_cast<float>(mousePressed->position.x) / curScaleX;
+                        const float clickY = static_cast<float>(mousePressed->position.y) / curScaleY;
+
+                        if (isInside(clickX, clickY, 35.f, 15.f, 88.f, 70.f))
+                        {
+                            return "Back";
+                        }
+                    }
+
+                    if (hoveredItem != -1)
+                    {
+                        if (hoveredItem == 20)
+                            return "ENDLESS";
+                        return string("LEVEL ") + levelIdAt(hoveredItem);
+                    }
                 }
             }
         }
@@ -124,11 +146,12 @@ string runCampaignMap(RenderWindow& window, const Progress& progress)
         bool unlocked[21];
         
         for (int i = 0; i < 20; ++i)
-            unlocked[i] = unlockAll || isLevelUnlocked(progress, i);
+            unlocked[i] = settings.unlockAll || unlockAll || isLevelUnlocked(progress, i);
         
-        unlocked[20] = unlockAll || isEndlessUnlocked(progress);
+        unlocked[20] = settings.unlockAll || unlockAll || isEndlessUnlocked(progress);
 
         hoveredItem = -1;
+        bool hoverBack = isInside(mouseX, mouseY, 35.f, 15.f, 88.f, 70.f);
         
         for (int i = 0; i < 21; ++i)
         {
@@ -196,6 +219,17 @@ string runCampaignMap(RenderWindow& window, const Progress& progress)
             outline.setOutlineThickness(3.f);
             outline.setOutlineColor(Color(78, 255, 152, 230));
             window.draw(outline);
+        }
+
+        if (hoverBack)
+        {
+            RectangleShape backOutline;
+            backOutline.setPosition({ 45.f * scaleX, 23.f * scaleY });
+            backOutline.setSize({ 68.f * scaleX, 54.f * scaleY });
+            backOutline.setFillColor(Color(255, 255, 255, 25));
+            backOutline.setOutlineThickness(2.f);
+            backOutline.setOutlineColor(Color(78, 255, 152, 230));
+            window.draw(backOutline);
         }
 
         window.display();

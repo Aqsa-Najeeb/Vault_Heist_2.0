@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+using namespace std;
 
 struct TreeNode
 {
@@ -14,12 +16,12 @@ struct TreeNode
 
 struct TraversalResult
 {
-    int data[32];
+    int data[2048];
     int size = 0;
 
     void add(int val)
     {
-        if (size < 32)
+        if (size < 2048)
         {
             data[size++] = val;
         }
@@ -83,6 +85,9 @@ public:
     TreeNode* findNode(int value) const;
     int nodeCount() const;
 
+    string serialize() const;
+    void deserialize(const string& data);
+
 private:
     TreeNode* m_root;
     int m_nextId;
@@ -99,4 +104,5 @@ private:
     TreeNode* buildFromPreIn(const int pre[], int preStart, int preEnd, const int in[], int inStart, int inEnd, TreeNode* parent);
     TreeNode* buildFromPostIn(const int post[], int postStart, int postEnd, const int in[], int inStart, int inEnd, TreeNode* parent);
     int countNodes(TreeNode* node) const;
+    void serializeHelper(TreeNode* node, string& out) const;
 };

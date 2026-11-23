@@ -1,5 +1,6 @@
 #include "BinaryTree.h"
 #include "User.h"
+#include "GameModes.h"
 #include <SFML/Graphics.hpp>
 #include <nlohmann/json.hpp>
 #include <fstream>
@@ -417,12 +418,14 @@ static int layoutHeapTree(const int arrayData[], int heapCount, float canvasX, f
 
 static string showResultScreen(RenderWindow& window, bool isPass, int stars, int steps, int optimalSteps, int penalties, const Font& font)
 {
-    string bgPath = (isPass)? "C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\images\\result_pass.png" : "C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\images\\result_fail.png";
+    string bgPath = isPass ? "C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\images\\result_pass.png" : "C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\images\\result_fail.png";
     Texture bgTex;
    
     if (!bgTex.loadFromFile(bgPath))
     {
-        return "Back";
+        string altPath = isPass ? "C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\images\\result_pass.png" : "C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\images\\result_fail.png";
+        if (!bgTex.loadFromFile(altPath))
+            return "Back";
     }
 
     Sprite bgSprite(bgTex);
@@ -445,7 +448,11 @@ static string showResultScreen(RenderWindow& window, bool isPass, int stars, int
 
             if (const auto* kp = event->getIf<Event::KeyPressed>())
             {
-                if (kp->code == Keyboard::Key::Escape || kp->code == Keyboard::Key::Enter || kp->code == Keyboard::Key::Space)
+                if (kp->code == Keyboard::Key::Escape)
+                {
+                    return "Back";
+                }
+                if (kp->code == Keyboard::Key::Enter || kp->code == Keyboard::Key::Space)
                 {
                     return isPass ? "Next" : "Retry";
                 }
@@ -707,7 +714,7 @@ static void setupLevel(LevelContext& ctx)
         nodePositionCount = 7;
 
         bstSearchIdx = 0;
-        optimalSteps = 3; // 50 -> 70 -> 60
+        optimalSteps = 3; 
         scoreSystem.reset(optimalSteps);
         activeButtonId = "search";
 
@@ -725,7 +732,7 @@ static void setupLevel(LevelContext& ctx)
         nodePositionCount = 6;
 
         bstInsertIdx = 0;
-        optimalSteps = 3; // 50 -> 30 -> place 35
+        optimalSteps = 3; 
         scoreSystem.reset(optimalSteps);
         activeButtonId = "insert";
 
@@ -767,7 +774,7 @@ static void setupLevel(LevelContext& ctx)
         nodePositions[6].isGreyed = true;
 
         bstRangeIdx = 0;
-        optimalSteps = 4; // 40, 50, 60, 70
+        optimalSteps = 4; 
         scoreSystem.reset(optimalSteps);
         activeButtonId = "execute_range_query";
 
@@ -820,7 +827,7 @@ static void setupLevel(LevelContext& ctx)
     }
     else if (normId == "3_2")
     {
-        //LL
+        
         nodePositions[0] = { 1, 50, canvasX + canvasW * 0.5f, canvasY + 60.f, 32.f, -1, 2, -1 };
         nodePositions[1] = { 2, 30, canvasX + canvasW * 0.35f, canvasY + 190.f, 32.f, 1, 3, -1 };
         nodePositions[2] = { 3, 20, canvasX + canvasW * 0.22f, canvasY + 340.f, 30.f, 2, -1, -1 };
@@ -836,7 +843,7 @@ static void setupLevel(LevelContext& ctx)
     }
     else if (normId == "3_3")
     {
-        //LR
+        
         nodePositions[0] = { 1, 50, canvasX + canvasW * 0.5f, canvasY + 60.f, 32.f, -1, 2, -1 };
         nodePositions[1] = { 2, 30, canvasX + canvasW * 0.32f, canvasY + 190.f, 32.f, 1, -1, 3 };
         nodePositions[2] = { 3, 40, canvasX + canvasW * 0.44f, canvasY + 340.f, 30.f, 2, -1, -1 };
@@ -883,7 +890,7 @@ static void setupLevel(LevelContext& ctx)
         nodePositions[6].badgeText = "S:1";
 
         kthIdx = 0;
-        optimalSteps = 3; // 40 -> 20 -> 30
+        optimalSteps = 3; 
         scoreSystem.reset(optimalSteps);
         activeButtonId = "find_kth_smallest";
 
@@ -1071,6 +1078,8 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
 
     {
         ifstream layoutFile("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\data\\vault_layout.json");
+        if (!layoutFile.is_open())
+            layoutFile.open("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\data\\vault_layout.json");
         if (layoutFile.is_open())
         {
             try
@@ -1236,6 +1245,8 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
 
     {
         ifstream levelsFile("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\data\\levels.json");
+        if (!levelsFile.is_open())
+            levelsFile.open("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\data\\levels.json");
         if (levelsFile.is_open())
         {
             try
@@ -1271,7 +1282,8 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
     string imagePath = "C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\images\\" + bgFileName;
     Texture backgroundTexture;
     
-    if (!backgroundTexture.loadFromFile(imagePath))
+    if (!backgroundTexture.loadFromFile(imagePath) &&
+        !backgroundTexture.loadFromFile("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\images\\" + bgFileName))
     {
         return "Can't_load_image";
     }
@@ -1279,9 +1291,13 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
 
     Font font;
     
-    if (!font.openFromFile("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\fonts\\perandory-semi-condensed.otf"))
+    if (!font.openFromFile("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\fonts\\perandory-semi-condensed.otf") &&
+        !font.openFromFile("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\fonts\\perandory-semi-condensed.otf"))
     {
-        (void)font.openFromFile("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\fonts\\CinzelDecorative-Regular.ttf");
+        if (!font.openFromFile("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\fonts\\CinzelDecorative-Regular.ttf"))
+        {
+            (void)font.openFromFile("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\assets\\fonts\\CinzelDecorative-Regular.ttf");
+        }
     }
 
     BinaryTree tree;
@@ -1419,56 +1435,6 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
         font
     };
 
-    LevelContext ctx {
-        visitedCount,
-        historyCount,
-        isReplaying,
-        hintNode,
-        isLevelDone,
-        completedSteps,
-        selectedHeapIdx,
-        eventLog,
-        normId,
-        tree,
-        nodePositionCount,
-        canvasX,
-        canvasY,
-        canvasW,
-        canvasH,
-        nodePositions,
-        targetSequenceSize,
-        targetSequenceData,
-        optimalSteps,
-        scoreSystem,
-        activeButtonId,
-        reconStep,
-        diameterCalculated,
-        heightCalculated,
-        lcaIdentified,
-        pathIndex,
-        mirroredNode,
-        bstSearchIdx,
-        bstInsertIdx,
-        bstCaseIdentified,
-        bstSuccessorSwapped,
-        bstDeleted,
-        bstRangeIdx,
-        bstBossChain,
-        bstBossIdx,
-        avlFoundUnbalanced,
-        avlRotationStep,
-        avlDoubleStep,
-        avlPredictionIdx,
-        kthIdx,
-        isAct4,
-        arraySize,
-        activeHeapSize,
-        heapArray,
-        progress,
-        window,
-        font
-    };
-
     setupLevel(ctx);
 
     while (window.isOpen())
@@ -1485,7 +1451,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
         const float mouseX = static_cast<float>(mousePixel.x) / scaleX;
         const float mouseY = static_cast<float>(mousePixel.y) / scaleY;
 
-        // Replay
+        
         if (isReplaying)
         {
             float delay = 0.6f / speedMultiplier;
@@ -1505,7 +1471,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
             }
         }
 
-        //Hint
+        
         if (hintNode != -1 && hintClock.getElapsedTime().asSeconds() > 2.5f)
         {
             hintNode = -1;
@@ -1554,13 +1520,13 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
             {
                 if (mb->button == Mouse::Button::Left)
                 {
-                    //Back
+                    
                     if (isInside(mouseX, mouseY, backArrow[0], backArrow[1], backArrow[2], backArrow[3]))
                     {
                         return "Back";
                     }
 
-                    //Toolba
+                    
                     if (isInside(mouseX, mouseY, undoBtn[0], undoBtn[1], undoBtn[2], undoBtn[3]))
                     {
                         if (completedSteps > 0)
@@ -1602,7 +1568,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                         speedMultiplier = 0.5f + speedRatio * 2.5f;
                     }
 
-                    //Level Buttons
+                    
                     for (int bIdx = 0; bIdx < levelButtonCount; ++bIdx)
                     {
                         const auto& btn = levelButtons[bIdx];
@@ -1655,7 +1621,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                         if (res == "Exit") 
                                             return "Exit";
                                         
-                                        return "CAMPAIGN MAP";
+                                        return res;
                                     }
                                     else
                                     {
@@ -1690,7 +1656,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                             
                                         if (res == "Exit") 
                                             return "Exit";
-                                        return "CAMPAIGN MAP";
+                                        return res;
                                     }
                                     else
                                     {
@@ -1707,7 +1673,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                     {
                                         string res = triggerVictory(ctx);
                                         if (res == "Exit") return "Exit";
-                                        return "CAMPAIGN MAP";
+                                        return res;
                                     }
                                     else
                                     {
@@ -1739,7 +1705,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                             
                                         if (res == "Exit") 
                                             return "Exit";
-                                        return "CAMPAIGN MAP";
+                                        return res;
                                     }
                                     else
                                     {
@@ -1768,7 +1734,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                             
                                         if (res == "Exit") 
                                             return "Exit";
-                                        return "CAMPAIGN MAP";
+                                        return res;
                                     }
                                     else
                                     {
@@ -1785,7 +1751,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                     {
                                         string res = triggerVictory(ctx);
                                         if (res == "Exit") return "Exit";
-                                        return "CAMPAIGN MAP";
+                                        return res;
                                     }
                                     else
                                     {
@@ -1821,7 +1787,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                         if (res == "Exit") 
                                             return "Exit";
                                         
-                                        return "CAMPAIGN MAP";
+                                        return res;
                                     }
                                     else
                                     {
@@ -1866,7 +1832,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                         if (res == "Exit") 
                                             return "Exit";
                                         
-                                        return "CAMPAIGN MAP";
+                                        return res;
                                     }
                                     else
                                     {
@@ -1895,7 +1861,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                             if (res == "Exit") 
                                                 return "Exit";
                                             
-                                            return "CAMPAIGN MAP";
+                                            return res;
                                         }
                                     }
                                 }
@@ -1911,7 +1877,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                         if (res == "Exit") 
                                             return "Exit";
                                         
-                                        return "CAMPAIGN MAP";
+                                        return res;
                                     }
                                     else
                                     {
@@ -1958,7 +1924,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                     {
                                         string res = triggerVictory(ctx);
                                         if (res == "Exit") return "Exit";
-                                        return "CAMPAIGN MAP";
+                                        return res;
                                     }
                                     else
                                     {
@@ -2037,7 +2003,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                     {
                                         string res = triggerVictory(ctx);
                                         if (res == "Exit") return "Exit";
-                                        return "CAMPAIGN MAP";
+                                        return res;
                                     }
                                     else
                                     {
@@ -2056,7 +2022,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                     {
                                         string res = triggerVictory(ctx);
                                         if (res == "Exit") return "Exit";
-                                        return "CAMPAIGN MAP";
+                                        return res;
                                     }
                                     else
                                     {
@@ -2143,7 +2109,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                             if (res == "Exit") 
                                                 return "Exit";
                                             
-                                            return "CAMPAIGN MAP";
+                                            return res;
                                         }
                                     }
                                     else
@@ -2253,7 +2219,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                         {
                                             string res = triggerVictory(ctx);
                                             if (res == "Exit") return "Exit";
-                                            return "CAMPAIGN MAP";
+                                            return res;
                                         }
                                     }
                                     else
@@ -2285,7 +2251,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                         {
                                             string res = triggerVictory(ctx);
                                             if (res == "Exit") return "Exit";
-                                            return "CAMPAIGN MAP";
+                                            return res;
                                         }
                                     }
                                     else
@@ -2308,8 +2274,8 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                         bstSuccessorSwapped = true;
                                         completedSteps = maxVal(completedSteps, 3);
                                         scoreSystem.addStep();
-                                        nodePositions[1].value = 40; //swap
-                                        nodePositions[4].isGreyed = true; //unlink successor
+                                        nodePositions[1].value = 40; 
+                                        nodePositions[4].isGreyed = true; 
                                         eventLog.record("[SWAP_VALUE] Replaced 30 with inorder successor 40");
                                     }
                                 }
@@ -2327,7 +2293,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                         {
                                             string res = triggerVictory(ctx);
                                             if (res == "Exit") return "Exit";
-                                            return "CAMPAIGN MAP";
+                                            return res;
                                         }
                                     }
                                     else
@@ -2351,7 +2317,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                             eventLog.record("[CUTSCENE] Balancing is vital to escape O(N) chains!");
                                             string res = triggerVictory(ctx);
                                             if (res == "Exit") return "Exit";
-                                            return "CAMPAIGN MAP";
+                                            return res;
                                         }
                                     }
                                     else
@@ -2435,6 +2401,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                                 if (scoreSystem.isAlarmFull())
                                 {
                                     eventLog.record("[FAILED] Alarm triggered!");
+                                    triggerAlarm3Seconds(window, &font);
                                     string res = showResultScreen(window, false, 0, scoreSystem.alarmSteps, optimalSteps, scoreSystem.penalties, font);
                                     
                                     if (res == "Exit") 
@@ -2475,7 +2442,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
         window.clear();
         window.draw(background);
 
-        //lLines
+        
         for (int i = 0; i < nodePositionCount; ++i)
         {
             int pid = nodePositions[i].parentId;
@@ -2502,7 +2469,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
             }
         }
 
-        //nodes
+        
         for (int i = 0; i < nodePositionCount; ++i)
         {
             const auto& pos = nodePositions[i];
@@ -2553,7 +2520,7 @@ string runLevel(RenderWindow& window, const string& levelId, Progress& progress)
                 circle.setOutlineThickness(4.f * scaleX);
             }
 
-            //hover
+            
             float mdx = mouseX - pos.x;
             float mdy = mouseY - pos.y;
             if (sqrt(mdx * mdx + mdy * mdy) <= pos.radius)

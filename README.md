@@ -1,117 +1,288 @@
-# CMake SFML Project Template
+# Vault Heist 2.0: The Living Vault
 
-This repository template should allow for a fast and hassle-free kick start of your next SFML project using CMake.
-Thanks to [GitHub's nature of templates](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template), you can fork this repository without inheriting its Git history.
+## 1. Project Description
+Vault Heist 2.0 is a puzzle-strategy game where the player infiltrates a living vault whose chambers form a tree data structure. Every room entered or key compared charges a physical security **Alarm Meter**, creating a tangible connection between tree height, balance, and escape success.
 
-The template starts out very basic, but might receive additional features over time:
+The game is organized into four campaign acts (20 levels total) plus Endless and Sandbox modes:
+- **Act 1: The Blueprint Wing (General Binary Tree):** Traversal predictions (preorder, inorder, postorder, level order), tree reconstruction from blueprint traversals, leaf-to-root height computation, lowest common ancestor (LCA), and tree inversion (mirroring).
+- **Act 2: The Sorted Wing (Binary Search Tree):** Navigation comparisons, ordered insertion, node deletion cases (leaf, single-child bypass, two-child successor swap), range query subtree pruning, and degenerated chain survival.
+- **Act 3: The Architect's Wing (AVL Tree):** Real-time balance factor monitoring, manual single/double rotations (LL, RR, LR, RL), auto-rebalancing prediction, and augmented order statistics ($O(\log n)$ $k$-th smallest and rank retrieval using `subtreeSize`).
+- **Act 4: The Heap Fortress (Max Heap & Heap Sort):** Complete binary tree indexing, bottom-up $O(n)$ Max Heap construction, root extraction, sift-down heap restoration, and full step-by-step Heap Sort with synchronized tree and array views.
 
-- Basic CMake script to build your project and link SFML on any operating system
-- Basic [GitHub Actions](https://github.com/features/actions) script for all major platforms
+All core data structures (`BinaryTree`, `BST`, `AVLTree`, `MaxHeap`, `EventLog`, `Validator`) are built from scratch without standard library container implementations.
 
-## Quick start
+---
 
-### Command line
+## 2. Requirements & Environment
+- **Operating System:** Windows 10/11, Linux, or macOS
+- **Compiler:** C++17 compliant compiler (`g++` >= 9.0, `clang++` >= 10.0, or MSVC 2019/2022)
+- **Build System:** CMake >= 3.20
+- **Libraries:**
+  - SFML 3.1.0 (automatically resolved via CMake FetchContent)
+  - nlohmann_json 3.11.3 (automatically resolved via CMake FetchContent)
+- **Optional Tools:** Python 3.9+ with `matplotlib` for benchmark plotting and PDF report generation.
 
-1. Install [Git](https://git-scm.com/downloads) and [CMake](https://cmake.org/download/). Use your system's package manager if available.
-2. Follow [GitHub's instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) for how to use their project template feature to create your own project. If you don't want to use GitHub, see the section below.
-3. Clone your new GitHub repo and open the repo in your text editor of choice.
-4. Open [CMakeLists.txt](CMakeLists.txt). Rename the project and the target name of the executable to whatever name you want. Make sure to change all occurrences.
-5. If you want to add or remove any .cpp files, change the source files listed in the `add_executable` call in CMakeLists.txt to match the source files your project requires. If you plan on keeping the default main.cpp file then no changes are required.
-6. If your code uses the Audio or Network modules then add `SFML::Audio` or `SFML::Network` to the `target_link_libraries` call alongside the existing `SFML::Graphics` library that is being linked.
-7. If you use Linux, install SFML's dependencies using your system package manager. On Ubuntu and other Debian-based distributions you can use the following commands:
+---
+
+## 3. Build & Run Instructions
+
+### 3.1 Building the Game
+From the root of the repository:
+```bash
+cmake -B build -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
+cmake --build build
+```
+*(On Visual Studio, open the repository folder directly or generate using `cmake -B build` without generator flags).*
+
+### 3.2 Running the Game
+```bash
+./build/bin/main.exe
+```
+
+---
+
+## 4. Building and Running Tests & Benchmarks
+
+### 4.1 Running the Unit Test Suite (Phase 1 & 2)
+The test suite is model-only (headless, zero GUI dependencies) and exercises all 11 specification areas with 36 automated test cases:
+```bash
+cd tests
+g++ -std=c++17 -Wall -Wextra -I../src -I. -o run_tests.exe ../src/BinaryTree.cpp ../src/BST.cpp ../src/AVL.cpp ../src/MaxHeap.cpp ../src/Validator.cpp ../src/EventLog.cpp test_main.cpp test_traversals.cpp test_reconstruction.cpp test_bst.cpp test_avl.cpp test_order_statistics.cpp test_duplicates.cpp test_max_heap.cpp test_heap_sort.cpp test_event_undo.cpp test_save_load.cpp test_event_disable.cpp
+./run_tests.exe
+```
+Or using CMake:
+```bash
+cd tests
+cmake -B build -G "MinGW Makefiles"
+cmake --build build
+./build/run_tests.exe
+```
+
+### 4.2 Running the Benchmarks (Phase 5)
+Compiles with `-O2` and runs all 7 empirical experiments (height degeneration, 10,000 random searches, rotation frequencies, order statistics speedup, heap construction linearity, and sorting algorithms comparison):
+```bash
+cd benchmarks
+g++ -O2 -std=c++17 -Wall -Wextra -I../src -o benchmark.exe benchmark_main.cpp ../src/BST.cpp ../src/AVL.cpp ../src/MaxHeap.cpp ../src/Validator.cpp ../src/EventLog.cpp ../src/BinaryTree.cpp
+./benchmark.exe
+```
+Benchmark outputs are written to `benchmarks/results.csv` and `benchmarks/results.txt`.
+
+## 5. Folder Structure
+```
+Vault_Heist_2.0/
+├── CMakeLists.txt              # Root build configuration linking SFML and model library
+├── README.md                   # Complete documentation and user guide
+├── src/                        # Core source code
+│   ├── BinaryTree.h / .cpp     # General binary tree, traversals, reconstruction, mirror
+│   ├── BST.h / .cpp            # Binary Search Tree with 3 deletion cases & range pruning
+│   ├── AVL.h / .cpp            # Augmented AVL tree with LL/RR/LR/RL rotations & kth/rank
+│   ├── MaxHeap.h / .cpp        # Array-based Max Heap & in-place Heap Sort
+│   ├── Validator.h / .cpp      # Structural and mathematical invariant verification
+│   ├── EventLog.h / .cpp       # Decoupled event logging and dispatch model
+│   ├── GameModes.h / .cpp      # Endless mode, Sandbox editors, audio and settings
+│   ├── Level.cpp / Map.cpp     # Campaign level loop, HUD, tree canvas layout & drawing
+│   ├── Menu.cpp / User.cpp     # Main navigation menus and user progress persistence
+│   ├── assets/                 # Fonts, sound effects, background music, level art
+│   └── data/                   # levels.json and vault_layout.json
+├── benchmarks/                 # Standalone benchmarking suite
+│   ├── benchmark_main.cpp      # Section 10 empirical benchmarking program
+│   ├── results.csv             # Structured CSV dataset from benchmark run
+│   └── results.txt             # Formatted benchmark summary tables
+└── data/                       # Save state files (progress.sav, settings.json)
+```
+
+---
+
+## 6. Game Controls
+
+### Mouse Controls
+- **Left Click:** Select room, interact with UI buttons, choose rotation pivots, or swap array elements.
+- **Hover:** Displays inspection tooltip with room key, subtree height, balance factor, node size, and tree depth.
+- **Left Click + Drag:** 
+  - Drag blueprint room tokens into slots (reconstruction levels).
+  - Drag subtrees onto rotation pivots for manual AVL rebalancing.
+- **Mouse Wheel:** Smooth canvas zoom in / zoom out.
+- **Right Click / Middle Click Drag:** Pan viewport across large trees or arrays.
+
+### Keyboard Shortcuts
+- **Space:** Play / pause event animation playback.
+- **Left Arrow:** Step backward one event in history.
+- **Right Arrow:** Step forward one event in history.
+- **Z:** Undo last player action (restores previous tree/heap snapshot).
+- **H:** Reveal strategic hint (-1 star penalty cap).
+- **Esc:** Open pause menu / return to campaign map.
+
+
+
+## 7. Guide to Adding New Levels via JSON Data Files
+
+Vault Heist 2.0 separates game data from engine logic. Level definitions, generation parameters, objectives, coordinate layouts, and UI button configurations are driven entirely by external JSON files. Adding new custom levels requires zero C++ recompilation when using existing task mechanics.
+
+---
+
+### 7.1 Architecture Overview
+
+Level loading and gameplay execution flow through two configuration files:
+1. `src/data/levels.json` (fallback: `data/levels.json`): Governs level metadata, Act category, task objective, deterministic PRNG seed, and node generator rules.
+2. `src/data/vault_layout.json` (fallback: `data/vault_layout.json`): Governs visual coordinate layouts in the 1920x1080 design space, including canvas bounds, button positions/labels, input boxes, and array strip cells.
+
+Campaign progression and unlock sequence are managed in `src/User.cpp` via player save data in `data/progress.sav` (or `src/data/progress.sav`).
+
+---
+
+### 7.2 Step-by-Step Level Creation Guide
+
+#### Step 1: Register Level Logic in `src/data/levels.json`
+
+Locate the `"levels"` array in `src/data/levels.json` and append your new level object.
+
+```json
+{
+  "id": "2.6",
+  "act": 2,
+  "seed": 2601,
+  "image": "level_2_1.png",
+  "task": "range",
+  "generator": {
+    "nodes": [8, 12],
+    "values": "distinct",
+    "range": [25, 75]
+  }
+}
+```
+
+#### Field Specifications:
+- **`id` (string):** The unique identifier. Both dot-notation (`"2.6"`) and underscore-notation (`"2_6"`) are automatically recognized and normalized by `Level::run`.
+- **`act` (integer):** The Act classification:
+  - `1`: General Binary Trees (Traversals, Blueprint Reconstruction, Height/Diameter, LCA, Mirroring).
+  - `2`: Binary Search Trees (Search, Insertion, Deletion, Range Queries, kth-Smallest).
+  - `3`: AVL Trees (Self-Balancing Invariants, LL/RR/LR/RL Rotations, Height/BF verification).
+  - `4`: Max Heaps & Heap Sort (Heap Property Verification, Sift-Down, Extract-Max, Heap Sort).
+- **`seed` (integer):** A deterministic random seed ensuring consistent, reproducible tree generation for each player attempt.
+- **`image` (string):** The background texture file located inside `src/assets/images/` (e.g. `"level_2_1.png"`, `"Sandbox_BST.png"`).
+- **`task` (string):** The game objective and validator logic to execute. Supported tasks include:
+  - `"traversal"`: Execute preorder, inorder, postorder, or level-order visits.
+  - `"reconstruct"`: Reconstruct the binary tree blueprint from preorder+inorder or postorder+inorder sequences.
+  - `"height_diameter"`: Compute height and maximum path diameter across tree nodes.
+  - `"lca"`: Identify the Lowest Common Ancestor between target vault nodes.
+  - `"mirror"`: Invert/mirror the vault layout and verify symmetric properties.
+  - `"search"`: Locate target security keys using binary search comparisons.
+  - `"insert"`: Insert keys maintaining BST ordering without exceeding alarm thresholds.
+  - `"delete"`: Safely remove keys (leaf, single child, two children with predecessor/successor).
+  - `"range"`: Identify and extract all keys falling within an inclusive interval `[low, high]`.
+  - `"kth_smallest"`: Query the $k$-th smallest element using order-statistics metadata.
+  - `"avl_balance"`: Restore AVL balance factor $|BF| \le 1$ using rotations.
+  - `"rotations"`: Specific rotation training (Single Left/Right, Double Left-Right/Right-Left).
+  - `"heap_verify"`: Verify the Max Heap parent-child invariant $A[i] \ge \max(A[2i+1], A[2i+2])$.
+  - `"sift_down"`: Restore the heap invariant from a disturbed root using iterative sift-down swaps.
+  - `"heap_extract"`: Extract the maximum root key, swap with the last leaf, shrink active region, and sift down.
+  - `"heap_sort"`: Perform in-place heap sort, observing the boundary between the active heap and sorted region.
+- **`generator` (object):** Configuration for procedural tree generation:
+  - `"nodes"`: Array `[min, max]` defining the node count range.
+  - `"values"`: `"distinct"` for unique node values, or `"any"` if duplicates are permitted.
+  - `"modes"` / `"sources"`: Optional mode constraints (e.g., `["preorder", "inorder"]`).
+
+---
+
+#### Step 2: Define UI Coordinates in `src/data/vault_layout.json`
+
+Under the `"levels"` object in `src/data/vault_layout.json`, add an entry keyed by the level identifier (e.g. `"2.6"` or `"2_6"`):
+
+```json
+"2.6": {
+  "image": "level_2_1.png",
+  "tree_area": { "x": 398, "y": 265, "w": 1100, "h": 648 },
+  "buttons": [
+    {
+      "id": "query_range",
+      "label": "Execute Range [25, 75]",
+      "x": 54,
+      "y": 384,
+      "w": 251,
+      "h": 77
+    },
+    {
+      "id": "clear_selection",
+      "label": "Reset Query",
+      "x": 54,
+      "y": 480,
+      "w": 251,
+      "h": 77
+    }
+  ]
+}
+```
+
+For Act 4 (Max Heap) levels, also specify the array visualization strip:
+
+```json
+"4.6": {
+  "image": "level_4_1.png",
+  "tree_area": { "x": 398, "y": 220, "w": 1100, "h": 540 },
+  "array_strip": {
+    "cells": [
+      { "index": 0, "x": 520, "y": 820, "w": 128, "h": 64 },
+      { "index": 1, "x": 608, "y": 820, "w": 88,  "h": 64 },
+      { "index": 2, "x": 696, "y": 820, "w": 88,  "h": 64 },
+      { "index": 3, "x": 784, "y": 820, "w": 88,  "h": 64 },
+      { "index": 4, "x": 872, "y": 820, "w": 88,  "h": 64 },
+      { "index": 5, "x": 960, "y": 820, "w": 88,  "h": 64 },
+      { "index": 6, "x": 1048, "y": 820, "w": 88, "h": 64 },
+      { "index": 7, "x": 1136, "y": 820, "w": 88, "h": 64 },
+      { "index": 8, "x": 1224, "y": 820, "w": 88, "h": 64 },
+      { "index": 9, "x": 1312, "y": 820, "w": 128, "h": 64 }
+    ]
+  },
+  "buttons": [
+    { "id": "sift_down", "label": "Sift Down Step", "x": 54, "y": 384, "w": 251, "h": 77 }
+  ]
+}
+```
+
+If an interactive button accepts numerical player input (e.g., search key or insertion value), include the `"input"` child object:
+```json
+{
+  "id": "search_key",
+  "label": "Probe Node",
+  "x": 54, "y": 384, "w": 251, "h": 77,
+  "input": { "x": 315, "y": 394, "w": 65, "h": 55 }
+}
+```
+
+---
+
+#### Step 3: Register Campaign Map and Progression (Optional for Extra Campaign Levels)
+
+The standard campaign contains 20 levels (5 per Act). If adding a 6th level to an Act:
+
+1. **Map Coordinates (`src/Map.cpp`):**
+   Add the button coordinates to the corresponding Act pin array (`act1X`, `act1Y`, `act2X`, etc.) to render the level pin on the campaign map:
+   ```cpp
+   const float act2X[6] = { 650.f, 790.f, 950.f, 1100.f, 1260.f, 1420.f };
+   const float act2Y[6] = { 460.f, 440.f, 480.f,  450.f,  490.f,  470.f };
    ```
-   sudo apt update
-   sudo apt install \
-       libxrandr-dev \
-       libxcursor-dev \
-       libxi-dev \
-       libudev-dev \
-       libfreetype-dev \
-       libflac-dev \
-       libvorbis-dev \
-       libgl1-mesa-dev \
-       libegl1-mesa-dev \
-       libfreetype-dev \
-       libharfbuzz-dev \
-       libmbedtls-dev \
-       libssh2-1-dev
+
+2. **Progression Registration (`src/User.cpp`):**
+   Update the ID table in `levelIdAt(int index)` and adjust the array bounds (`ids[20]` $\rightarrow$ `ids[24]`):
+   ```cpp
+   const char* levelIdAt(int index)
+   {
+       static const char* ids[24] =
+       {
+           "1_1", "1_2", "1_3", "1_4", "1_5", "1_6",
+           "2_1", "2_2", "2_3", "2_4", "2_5", "2_6",
+           "3_1", "3_2", "3_3", "3_4", "3_5", "3_6",
+           "4_1", "4_2", "4_3", "4_4", "4_5", "4_6"
+       };
+       return ids[index];
+   }
    ```
-8. Configure and build your project. Most popular IDEs support CMake projects with very little effort on your part.
+   Levels automatically unlock sequentially: clearing level $i$ with $\ge 1$ star unlocks level $i + 1$.
 
-   - [VS Code](https://code.visualstudio.com) via the [CMake extension](https://code.visualstudio.com/docs/cpp/cmake-linux)
-   - [Visual Studio](https://docs.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio?view=msvc-170)
-   - [CLion](https://www.jetbrains.com/clion/features/cmake-support.html)
-   - [Qt Creator](https://doc.qt.io/qtcreator/creator-project-cmake.html)
+---
 
-   Using CMake from the command line is straightforward as well.
-   Be sure to run these commands in the root directory of the project you just created.
+#### Step 4: Verification Checklist
 
-   ```
-   cmake -B build
-   cmake --build build
-   ```
-
-9. Enjoy!
-
-### Visual Studio
-
-Using a Visual Studio workspace is the simplest way to get started on windows.
-
-1. Ensure you have the [required components installed](https://learn.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio#installation).
-2. Follow [GitHub's instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) for how to use their project template feature to create your own project.
-3. If you have already cloned this repo, you can [open the folder](https://learn.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio0#ide-integration).
-4. If not, you can [clone it directly in Visual Studio](https://learn.microsoft.com/en-us/visualstudio/get-started/tutorial-open-project-from-repo).
-
-Visual Studio should automatically configure the CMake project, then you can build and run as normal through Visual Studio. See the links above for more details.
-
-## Upgrading SFML
-
-SFML is found via CMake's [FetchContent](https://cmake.org/cmake/help/latest/module/FetchContent.html) module.
-FetchContent automatically downloads SFML from GitHub and builds it alongside your own code.
-Beyond the convenience of not having to install SFML yourself, this ensures ABI compatibility and simplifies things like specifying static versus shared libraries.
-
-Modifying what version of SFML you want is as easy as changing the `GIT_TAG` argument.
-Currently it uses SFML 3 via the `3.1.0` tag.
-
-## But I want to...
-
-Modify CMake options by adding them as configuration parameters (with a `-D` flag) or by modifying the contents of CMakeCache.txt and rebuilding.
-
-### Not use GitHub
-
-You can use this project without a GitHub account by [downloading the contents](https://github.com/SFML/cmake-sfml-project/archive/refs/heads/master.zip) of the repository as a ZIP archive and unpacking it locally.
-This approach also avoids using Git entirely if you would prefer to not do that.
-
-### Change Compilers
-
-See the variety of [`CMAKE_<LANG>_COMPILER`](https://cmake.org/cmake/help/latest/variable/CMAKE_LANG_COMPILER.html) options.
-In particular you'll want to modify `CMAKE_CXX_COMPILER` to point to the C++ compiler you wish to use.
-
-### Change Compiler Optimizations
-
-CMake abstracts away specific optimizer flags through the [`CMAKE_BUILD_TYPE`](https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html) option.
-By default this project recommends `Release` builds which enable optimizations.
-Other build types include `Debug` builds which enable debug symbols but disable optimizations.
-If you're using a multi-configuration generator (as is often the case on Windows), you can modify the [`CMAKE_CONFIGURATION_TYPES`](https://cmake.org/cmake/help/latest/variable/CMAKE_CONFIGURATION_TYPES.html#variable:CMAKE_CONFIGURATION_TYPES) option.
-
-### Change Generators
-
-While CMake will attempt to pick a suitable default generator, some systems offer a number of generators to choose from.
-Ubuntu, for example, offers Makefiles and Ninja as two potential options.
-For a list of generators, click [here](https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html).
-To modify the generator you're using you must reconfigure your project providing a `-G` flag with a value corresponding to the generator you want.
-You can't simply modify an entry in the CMakeCache.txt file unlike the above options.
-Then you may rebuild your project with this new generator.
-
-## More Reading
-
-Here are some useful resources if you want to learn more about CMake:
-
-- [Official CMake Tutorial](https://cmake.org/cmake/help/latest/guide/tutorial/)
-- [How to Use CMake Without the Agonizing Pain - Part 1](https://alexreinking.com/blog/how-to-use-cmake-without-the-agonizing-pain-part-1.html)
-- [How to Use CMake Without the Agonizing Pain - Part 2](https://alexreinking.com/blog/how-to-use-cmake-without-the-agonizing-pain-part-2.html)
-- [Better CMake YouTube series by Jefferon Amstutz](https://www.youtube.com/playlist?list=PL8i3OhJb4FNV10aIZ8oF0AA46HgA2ed8g)
-
-## License
-
-The source code is dual licensed under Public Domain and MIT -- choose whichever you prefer.
+1. **JSON Syntax:** Validate `src/data/levels.json` and `src/data/vault_layout.json` with a JSON linter to avoid parsing syntax errors.
+2. **Asset Presence:** Ensure the background image referenced in `"image"` exists inside `src/assets/images/`.
+3. **Deterministic Testing:** Run the test suite (`cd tests && ./run_tests.exe`) to confirm that all data structure validators pass against the procedural generators.

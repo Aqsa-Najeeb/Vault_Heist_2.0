@@ -33,6 +33,8 @@ void loadProgress(Progress& progress)
 
     ifstream in("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\data\\progress.sav");
     if (!in)
+        in.open("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\data\\progress.sav");
+    if (!in)
         return;
 
     for (int i = 0; i < 20; ++i)
@@ -48,6 +50,8 @@ void loadProgress(Progress& progress)
 void saveProgress(const Progress& progress)
 {
     ofstream out("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\data\\progress.sav");
+    if (!out)
+        out.open("C:\\Users\\jensc\\repos\\Vault2\\Vault_Heist_2.0\\src\\data\\progress.sav");
     
     for (int i = 0; i < 20; ++i)
     {

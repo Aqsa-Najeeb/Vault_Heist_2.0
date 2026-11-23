@@ -1,0 +1,75 @@
+================================================================================
+                VAULT HEIST 2.0 - COMPREHENSIVE BENCHMARK REPORT                
+================================================================================
+
+--- EXPERIMENT 1: BST vs AVL Tree Height ---
+N		Input		BST Height	AVL Height	Theoretical Optimal (log2 N)
+100		Sorted		100		7		7
+100		Random		13		8		7
+1000		Sorted		1000		10		10
+1000		Random		19		12		10
+10000		Sorted		10000		14		14
+10000		Random		31		16		14
+
+--- EXPERIMENT 2: Search Cost (10,000 Random Searches) ---
+N		Data Structure	Avg Comparisons	Total Time (ms)	Avg Time/Search (ns)
+100		BST		7.724500		0.202400		20.240000
+100		AVL		6.323300		0.174300		17.430000
+1000		BST		12.574300		0.310500		31.050000
+1000		AVL		9.687400		0.225500		22.550000
+10000		BST		17.568300		0.677800		67.780000
+10000		AVL		13.028500		0.388300		38.830000
+
+--- EXPERIMENT 3: AVL Rotations per Operation ---
+N		Input		Avg Rot/Insert	Avg Rot/Delete	Max Rot/Delete
+100		Sorted		0.930000	0.440000	1
+100		Random		1.040000	0.400000	3
+1000		Sorted		0.990000	0.491000	1
+1000		Random		0.886000	0.476000	7
+10000		Sorted		0.998600	0.498800	1
+10000		Random		0.920900	0.511200	10
+
+--- EXPERIMENT 4: Order Statistics (1,000 Queries: AVL kth vs BST Inorder Scan) ---
+N		AVL kth (ms)	BST Inorder (ms)	Speedup Factor
+100		0.030100		0.087800		2.916944x
+1000		0.045100		0.555400		12.314856x
+10000		0.087500		22.073300		252.266286x
+
+--- EXPERIMENT 5: Bottom-Up Heap Construction Time (Confirming O(n)) ---
+N		Input		Build Time (ms)	Time / N (ns)
+100		Ordered		0.001372		13.720000
+100		Random		0.000598		5.980000
+1000		Ordered		0.004248		4.248000
+1000		Random		0.003854		3.854000
+10000		Ordered		0.040706		4.070600
+10000		Random		0.074124		7.412400
+
+--- EXPERIMENT 6: Heap Sort Across Input Distributions (N = 10,000) ---
+Input Distribution	Time (ms)	Comparisons	Swaps
+Random		0.630900		235211		124067
+Sorted		0.430800		244460		131956
+Reverse-Sorted		0.532700		226682		116696
+Duplicate-Heavy		0.423800		196022		99756
+
+--- EXPERIMENT 7: Sorting Algorithms Comparison (Heap Sort vs Insertion, Merge, Quick) ---
+N	Algorithm	Runtime (ms)	Comparisons	Swaps/Moves	Auxiliary Space
+100	HeapSort	0.004700		1035		579		O(1) [4 B]
+100	MergeSort	0.005400		555		672		O(n) [400 B]
+100	QuickSort	0.005400		841		203		O(log n) [48 B]
+100	InsertionSort	0.003000		2640		2545		O(1) [4 B]
+1000	HeapSort	0.055400		16794		9054		O(1) [4 B]
+1000	MergeSort	0.057500		8707		9976		O(n) [4000 B]
+1000	QuickSort	0.051200		13554		2689		O(log n) [72 B]
+1000	InsertionSort	0.137500		245320		244325		O(1) [4 B]
+5000	HeapSort	0.294600		107789		57213		O(1) [4 B]
+5000	MergeSort	0.299000		55270		61808		O(n) [20000 B]
+5000	QuickSort	0.268200		81669		16293		O(log n) [96 B]
+5000	InsertionSort	3.082900		6228680		6223697		O(1) [4 B]
+10000	HeapSort	0.653400		235358		124129		O(1) [4 B]
+10000	MergeSort	0.617300		120437		133616		O(n) [40000 B]
+10000	QuickSort	0.542600		186597		34723		O(log n) [104 B]
+10000	InsertionSort	[SKIPPED O(N^2)]	---		---		O(1)
+
+================================================================================
+                          BENCHMARKS COMPLETE                                   
+================================================================================

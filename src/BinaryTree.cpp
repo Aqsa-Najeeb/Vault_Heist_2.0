@@ -5,7 +5,7 @@ using namespace std;
 class NodeStack
 {
 private:
-    TreeNode* m_data[64];
+    TreeNode* m_data[2048];
     int m_top;
 
 public:
@@ -13,7 +13,7 @@ public:
 
     void push(TreeNode* node)
     {
-        if (m_top < 63)
+        if (m_top < 2047)
             m_data[++m_top] = node;
     }
 
@@ -34,7 +34,7 @@ public:
 class NodeQueue
 {
 private:
-    TreeNode* m_data[64];
+    TreeNode* m_data[2048];
     int m_front;
     int m_rear;
     int m_count;
@@ -44,10 +44,10 @@ public:
 
     void push(TreeNode* node)
     {
-        if (m_count < 64)
+        if (m_count < 2048)
         {
             m_data[m_rear] = node;
-            m_rear = (m_rear + 1) % 64;
+            m_rear = (m_rear + 1) % 2048;
             m_count++;
         }
     }
@@ -57,7 +57,7 @@ public:
         if (m_count > 0)
         {
             TreeNode* val = m_data[m_front];
-            m_front = (m_front + 1) % 64;
+            m_front = (m_front + 1) % 2048;
             m_count--;
             return val;
         }
@@ -144,9 +144,12 @@ void BinaryTree::setRoot(TreeNode* root)
 
 void BinaryTree::destroy(TreeNode* node)
 {
-    if (!node) return;
+    if (!node) 
+        return;
+    
     destroy(node->left);
     destroy(node->right);
+    
     delete node;
 }
 
@@ -160,7 +163,9 @@ void BinaryTree::clear()
 
 static void recPre(TreeNode* node, TraversalResult& out)
 {
-    if (!node) return;
+    if (!node) 
+        return;
+    
     out.add(node->value);
     recPre(node->left, out);
     recPre(node->right, out);
@@ -175,7 +180,9 @@ TraversalResult BinaryTree::preorderRecursive() const
 
 static void recIn(TreeNode* node, TraversalResult& out)
 {
-    if (!node) return;
+    if (!node) 
+        return;
+    
     recIn(node->left, out);
     out.add(node->value);
     recIn(node->right, out);
@@ -190,7 +197,9 @@ TraversalResult BinaryTree::inorderRecursive() const
 
 static void recPost(TreeNode* node, TraversalResult& out)
 {
-    if (!node) return;
+    if (!node) 
+        return;
+    
     recPost(node->left, out);
     recPost(node->right, out);
     out.add(node->value);
@@ -205,7 +214,9 @@ TraversalResult BinaryTree::postorderRecursive() const
 
 static void getLevel(TreeNode* node, int level, TraversalResult& out)
 {
-    if (!node) return;
+    if (!node) 
+        return;
+    
     if (level == 1)
     {
         out.add(node->value);
@@ -274,7 +285,9 @@ TraversalResult BinaryTree::inorderIterative() const
 TraversalResult BinaryTree::postorderIterative() const
 {
     TraversalResult out;
-    if (!m_root) return out;
+    
+    if (!m_root) 
+        return out;
 
     NodeStack s1;
     NodeStack s2;
@@ -300,7 +313,9 @@ TraversalResult BinaryTree::postorderIterative() const
 TraversalResult BinaryTree::levelOrderIterative() const
 {
     TraversalResult out;
-    if (!m_root) return out;
+    
+    if (!m_root) 
+        return out;
 
     NodeQueue queue;
     queue.push(m_root);
@@ -702,4 +717,78 @@ BinaryTree BinaryTree::generateSeeded(int seed, int nodeCount)
     }
 
     return tree;
+}
+
+void BinaryTree::serializeHelper(TreeNode* node, std::string& out) const
+{
+    if (!node)
+    {
+        out += "# ";
+        return;
+    }
+    out += to_string(node->value) + " ";
+    serializeHelper(node->left, out);
+    serializeHelper(node->right, out);
+}
+
+string BinaryTree::serialize() const
+{
+    string out;
+    serializeHelper(m_root, out);
+    
+    if (!out.empty() && out.back() == ' ')
+    {
+        out.pop_back();
+    }
+    
+    return out;
+}
+
+static bool getNextToken(const string& data, size_t& pos, string& tok)
+{
+    while (pos < data.size() && (data[pos] == ' ' || data[pos] == '\t' || data[pos] == '\n' || data[pos] == '\r'))
+    {
+        pos++;
+    }
+
+    if (pos >= data.size())
+    {
+        return false;
+    }
+    
+    size_t start = pos;
+    
+    while (pos < data.size() && data[pos] != ' ' && data[pos] != '\t' && data[pos] != '\n' && data[pos] != '\r')
+    {
+        pos++;
+    }
+    tok = data.substr(start, pos - start);
+    return true;
+}
+
+static TreeNode* deserializeBinTreeHelper(const string& data, size_t& pos, TreeNode* parent, int& nextId)
+{
+    string tok;
+    
+    if (!getNextToken(data, pos, tok))
+    {
+        return nullptr;
+    }
+    if (tok == "#")
+    {
+        return nullptr;
+    }
+    
+    int val = stoi(tok);
+    TreeNode* node = new TreeNode(nextId++, val, parent);
+    node->left = deserializeBinTreeHelper(data, pos, node, nextId);
+    node->right = deserializeBinTreeHelper(data, pos, node, nextId);
+    return node;
+}
+
+void BinaryTree::deserialize(const std::string& data)
+{
+    clear();
+    size_t pos = 0;
+    m_root = deserializeBinTreeHelper(data, pos, nullptr, m_nextId);
 }
