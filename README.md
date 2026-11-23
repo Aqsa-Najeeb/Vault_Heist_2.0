@@ -11,6 +11,9 @@ The game is organized into four campaign acts (20 levels total) plus Endless and
 
 All core data structures (`BinaryTree`, `BST`, `AVLTree`, `MaxHeap`, `EventLog`, `Validator`) are built from scratch without standard library container implementations.
 
+Campaign Map
+<img src="src/assets/images/campaign_ma.png">
+
 ---
 
 ## 2. Requirements & Environment
